@@ -1,13 +1,21 @@
-language : java
+language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 before_install:
- - chmod +x gradlew
+- chmod +x gradlew
 install: "./gradlew test"
 script: "./gradlew jar"
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+deploy:
+  provider: heroku
+  api_key:
+    secure: qzsPmesY1HkNg7q5lf+0yMKTKY6rXZBfe+mSxom5XWppdS3qz7IK0mkrje8aKcGjDaNO/N2pH7g0IvaQmDPAS+akVKmbj0jpR2HloWo8i21ypk4McpveERPIsCwf/PSORZlXdLHLyOlUwDnHLcPN7ljMRML9kldHOVK3puV10fZVfsOzriOam5p4sJuIYCovJjsjl8QNc0mbfHUqHK+BP1vM6NCmizkTJAcvADmodZzdAJhbKU+xj76l9E5sRge+Y6L9d0tkIFwXsNkVay/lClGm1GK23C5Dre/atUGu90lawFxoYGE6Gn+i3ayjcSLx4YlETeYyaFaFtf4ciaXRnoaBCaITiQ2oFT1aBK85MfheUpO/roBCip/t/oCDcN8Khev353976zuS04vt6RjQkdN19sa1qH7I8tT8cNL72ApTHaXVPTIgagpxB1JbYHDjpZsHzibCfgsvMYZ3z9dzjTL/fCSiCV8aDwOLbOAdUrJ6+/N4ZQsQQHo/scsOzBW4y4pXmZ2RiFE8Iei3x4L5AnPtciENG3LVZXQGrtxqLmsswWG5yXa2fi+Iu5JlSv2CGXiWbQYCg23Mzo8DysD6NXh5eIQeJzm6aZWuapFoVP4C1q64FWgAELwV7+AqpWzH4IuKInSZApUwoyXMk0yKClP9ox0DlVvv53M0KAxFx4I=
+  strategy: git
+  app:
+    develop: voyage2-staging
+    master: voyage2-production
