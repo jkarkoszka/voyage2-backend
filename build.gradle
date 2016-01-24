@@ -44,6 +44,10 @@ eclipse {
 	}
 }
 
+jar {
+    archiveName = "voyage2-backend.jar"
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
 }
