@@ -1,2 +1,2 @@
 language : java
-install: "gradlew test jar"
+install: "gradle test jar"
