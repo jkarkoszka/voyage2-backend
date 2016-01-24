@@ -3,4 +3,5 @@ jdk:
   - oraclejdk8
 before_install:
  - chmod +x gradlew
-install: "gradle test jar"
+install: "./gradlew test"
+script: "./gradlew jar"
