@@ -13,6 +13,5 @@ hs_err_pid*
 
 .idea/
 build/
-gradle/
 voyage2.iml
 .gradle/
