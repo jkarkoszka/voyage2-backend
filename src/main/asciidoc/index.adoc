@@ -1,0 +1,26 @@
+= Voyage2 Backend
+Jakub Karkoszka;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[resources]]
+= Opis metod API
+
+
+[[resources-user]]
+== Zarządzanie użytkownikami i autoryzacja
+
+[[resource-people-list]]
+=== Rejestracja użytkownika
+
+==== Przykładowe zapytanie
+
+include::{snippets}/user-register/http-request.adoc[]
+
+==== Przykładowa odpowiedź
+
+include::{snippets}/user-register/http-response.adoc[]
