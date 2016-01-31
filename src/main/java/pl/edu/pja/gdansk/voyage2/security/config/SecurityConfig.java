@@ -5,15 +5,21 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.NullRequestCache;
+import pl.edu.pja.gdansk.voyage2.security.service.SecuredUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private SecuredUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("user/token").authenticated()
                 .antMatchers("/user").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -29,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 }

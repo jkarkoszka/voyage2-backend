@@ -1,7 +1,7 @@
 package pl.edu.pja.gdansk.voyage2.user.service;
 
-import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordEncryptor {

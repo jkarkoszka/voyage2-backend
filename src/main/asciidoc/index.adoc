@@ -7,20 +7,114 @@ Jakub Karkoszka;
 :toclevels: 4
 :sectlinks:
 
-[[resources]]
-= Opis metod API
+[[overview-http-verbs]]
+== Opis używanych metod HTTP
+Voyage2 Backend używa standardy protokołu HTTP i stara się być jak najbliżej konwencji REST.
 
+|===
+| Metoda HTTP | Opis użycia
+
+| `GET`
+| Używana do pobierania elementów np. listy tras, pojedynczych tras itp.
+
+| `POST`
+| Używana do tworzenia nowych elementów np. dodawania tras, dodawanie elementów tras itp.
+
+| `PATCH`
+| Używana do edycja istniejących elementów, włączając w to również częściową edycję, np. zmiana nazwy trasy
+
+| `PUT`
+| Używana do edycji istniejących elementów - tylko całkowita podmiana istniejącego elementu np. trasa wraz ze wszystkimi elementami
+
+| `DELETE`
+| Używana do usuwania istniejących elementów
+|===
+
+[[overview-http-status-codes]]
+== Opis używanych statusów HTTP
+Voyage2 Backend używa standardy protokołu HTTP i stara się być jak najbliżej konwencji REST.
+
+|===
+| Status HTTP | Opis użycia
+
+| `200 OK`
+| Standardowa odpowiedź dla poprawnie zakończonych zapytań HTTP. Dla zapytań metodą GET odpowiedź ta oznacza, że zwrócona odpowiedź zawiera żądany element, badź listę elementów. Dla zapytań metodą POST odpowiedź ta oznacza, że zwrócona odpowiedź zawiera informację o poprawnym przetworzeniu wysłanego elementu
+
+| `201 Created`
+| Odpowiedż oznacza, że wysłany przez zapytanie HTTP element (metodą POST) został poprawnie utworzony
+
+| `204 No Content`
+| Odpowiedź oznacza, że zapytanie HTTP zostało poprawnie przetworzone
+
+| `400 Bad Request`
+| Odpowiedź oznacza że zapytanie HTTP nie zostało poprawnie przetworzone z powodu błędnej struktury np. niepoprawny format zapytania
+
+| `404 Not Found`
+| Odpowiedź oznacza że element, o który został wskazany w zapytaniu HTTP nie istnieje
+
+| `500 Internal Server Error`
+| Odpowiedź ozacza że wystąpił błąd w czasie przetwarzania serwera. Szczegółowa informację o błędzie można uzyskać z kodu błędu, który został zwrócony. Opis kodów błędów znajduje się poniżej.
+
+|===
+
+[[overview-error-codes]]
+== Opis kodów błędów
+Gdy występuje wyjątek Voyage Backend zwraca odpowiedź w następującej formie:
+
+[source,http]
+----
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+Content-Length: 580
+
+{
+"code" : 1,
+"message" : "Item already exist in the database",
+"developerMessage" : "{ \"serverUsed\" : \"192.168.99.100:32769\" , \"ok\" : 1 , \"n\" : 0 , \"err\" : \"E11000 duplicate key error collection: voyage2.user index: email dup key: { : \\\"test@example.com\\\" }\" , \"code\" : 11000}; nested exception is com.mongodb.MongoException$DuplicateKey: { \"serverUsed\" : \"192.168.99.100:32769\" , \"ok\" : 1 , \"n\" : 0 , \"err\" : \"E11000 duplicate key error collection: voyage2.user index: email dup key: { : \\\"test@example.com\\\" }\" , \"code\" : 11000}"
+}
+----
+
+Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów błędów wraz z opisem co oznaczają.
+
+|===
+| Kod błedu | Opis
+
+| `1`
+| Element już istnieje w bazie danych
+
+|===
+
+
+
+
+[[resources]]
+== Opis metod API
 
 [[resources-user]]
-== Zarządzanie użytkownikami i autoryzacja
+=== Użytkownicy
 
-[[resource-people-list]]
-=== Rejestracja użytkownika
+[[resources-user-register]]
+==== Rejestracja użytkownika
 
-==== Przykładowe zapytanie
+===== Przykładowe zapytanie
 
 include::{snippets}/user-register/http-request.adoc[]
 
-==== Przykładowa odpowiedź
+===== Przykładowa odpowiedź
 
 include::{snippets}/user-register/http-response.adoc[]
+
+[[resources-user-login]]
+
+==== Autoryzacja użytkownika
+
+Autoryzacja odbywa się za pomocą metody HTTP Basic. Nazwa użytkownika i hasło jest przekazywana w nagłówku 'Authorization', a jego wartość jest zapisana w kodowaniu Base64.
+W odpowiedzi dostajemy token, który jest później wykorzystywany do wykonywania zapytań do API w kontekście zalogowanego użytkownika.
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-token-create/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-token-create/http-response.adoc[]

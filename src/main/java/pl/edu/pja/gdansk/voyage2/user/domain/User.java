@@ -3,6 +3,10 @@ package pl.edu.pja.gdansk.voyage2.user.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Document
 public class User {
@@ -40,5 +44,11 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(getRole().name()));
+        return authorities;
     }
 }

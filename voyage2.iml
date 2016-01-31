@@ -94,5 +94,9 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.jayway.restassured:rest-assured-common:2.8.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apache.commons:commons-lang3:3.3.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.springframework.security:spring-security-test:4.0.3.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.skyscreamer:jsonassert:0.9.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.json:json:20140107" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: commons-collections:commons-collections:3.2.2" level="project" />
   </component>
 </module>

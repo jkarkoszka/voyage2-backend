@@ -8,7 +8,6 @@ public class RegisterUserRequest {
     @NotNull
     @Size(min = 1)
     private String email;
-
     @NotNull
     @Size(min = 1)
     private String password;

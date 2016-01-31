@@ -3,7 +3,6 @@ package pl.edu.pja.gdansk.voyage2.user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
@@ -17,7 +16,7 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
-        return registerUser.createUser(registerUserRequest);
+    public void register(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
+        registerUser.createUser(registerUserRequest);
     }
 }

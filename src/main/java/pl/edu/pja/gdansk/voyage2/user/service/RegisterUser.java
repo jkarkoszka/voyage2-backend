@@ -12,16 +12,14 @@ public class RegisterUser {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncryptor passwordEncryptor;
 
-    public User createUser(RegisterUserRequest registerUserRequest) {
+    public void createUser(RegisterUserRequest registerUserRequest) {
         User user = new User();
         user.setEmail(registerUserRequest.getEmail());
         user.setPasswordHash(passwordEncryptor.encrypt(registerUserRequest.getPassword()));
         user.setRole(UserRole.USER);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
-
 }
