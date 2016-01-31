@@ -20,7 +20,10 @@ public class RedisConfig {
 
     @PostConstruct
     public void startRedis() throws IOException {
-        redisServer = new RedisServer(redisPort);
+        redisServer = RedisServer.builder()
+            .setting("bind 127.0.0.1")
+            .port(redisPort)
+            .build();
         redisServer.start();
     }
 
