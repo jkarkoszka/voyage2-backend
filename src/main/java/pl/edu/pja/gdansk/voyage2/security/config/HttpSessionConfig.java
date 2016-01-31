@@ -16,12 +16,15 @@ public class HttpSessionConfig {
     private String redisHostName;
     @Value("${spring.redis.port}")
     private int redisPort;
+    @Value("${spring.redis.password}")
+    private int redisPassword;
 
     @Bean
     public JedisConnectionFactory connectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setHostName(redisHostName);
         factory.setPort(redisPort);
+        factory.setPassword(redisPassword);
         factory.setUsePool(true);
         return factory;
     }
