@@ -4,7 +4,7 @@ Jakub Karkoszka;
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 4
+:toclevels: 3
 :sectlinks:
 
 [[overview-http-verbs]]
@@ -49,6 +49,9 @@ Voyage2 Backend używa standardy protokołu HTTP i stara się być jak najbliże
 | `400 Bad Request`
 | Odpowiedź oznacza że zapytanie HTTP nie zostało poprawnie przetworzone z powodu błędnej struktury np. niepoprawny format zapytania
 
+| `401 Unauthorized`
+| Odpowiedź oznacza że zapytanie HTTP nie zostało poprawnie przetworzone z powodu braku autoryzacji użytkownika. Taki kod błędu będzie również zwrócony na próbę zalogowania błędnymi danymi użytkownika.
+
 | `404 Not Found`
 | Odpowiedź oznacza że element, o który został wskazany w zapytaniu HTTP nie istnieje
 
@@ -83,9 +86,6 @@ Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów bł�
 | Element już istnieje w bazie danych
 
 |===
-
-
-
 
 [[resources]]
 == Opis metod API
