@@ -17,7 +17,7 @@ public class HttpSessionConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
     @Value("${spring.redis.password}")
-    private int redisPassword;
+    private String redisPassword;
 
     @Bean
     public JedisConnectionFactory connectionFactory() {
