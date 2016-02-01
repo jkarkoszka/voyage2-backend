@@ -15,11 +15,11 @@ public class RegisterUser {
     @Autowired
     private PasswordEncryptor passwordEncryptor;
 
-    public void createUser(RegisterUserRequest registerUserRequest) {
+    public User createUser(RegisterUserRequest registerUserRequest) {
         User user = new User();
         user.setEmail(registerUserRequest.getEmail());
         user.setPasswordHash(passwordEncryptor.encrypt(registerUserRequest.getPassword()));
         user.setRole(UserRole.USER);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }

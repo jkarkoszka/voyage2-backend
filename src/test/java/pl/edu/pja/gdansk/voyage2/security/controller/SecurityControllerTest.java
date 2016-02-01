@@ -17,7 +17,6 @@ import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,7 +48,6 @@ public class SecurityControllerTest extends BaseControllerTest {
             .perform(
                 post("/user/token").contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization", "Basic dGVzdEBleGFtcGxlLmNvbTphYWE=")
             )
-            .andExpect(status().is(HttpStatus.OK.value()))
-            .andExpect(content().json("{'token':'1','username':'test@example.com','authorities':['USER']}"));
+            .andExpect(status().is(HttpStatus.OK.value()));
     }
 }

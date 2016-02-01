@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 
@@ -20,11 +21,6 @@ public class SecuredUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        UserDetails details = new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPasswordHash(),
-                user.getAuthorities()
-        );
-        return details;
+        return new SecuredUserDetails(user);
     }
 }

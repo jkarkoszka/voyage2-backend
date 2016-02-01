@@ -1,5 +1,6 @@
 package pl.edu.pja.gdansk.voyage2.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Document
 public class User {
@@ -15,6 +17,7 @@ public class User {
     private String id;
     @Indexed(unique = true)
     private String email;
+    @JsonIgnore
     private String passwordHash;
     private UserRole role = UserRole.USER;
 
@@ -50,5 +53,25 @@ public class User {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority(getRole().name()));
         return authorities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(passwordHash, user.passwordHash) &&
+                role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, passwordHash, role);
     }
 }
