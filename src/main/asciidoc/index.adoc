@@ -1,5 +1,4 @@
 = Voyage2 Backend
-Jakub Karkoszka;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -118,3 +117,61 @@ include::{snippets}/user-token-create/http-request.adoc[]
 ===== Przykładowa odpowiedź
 
 include::{snippets}/user-token-create/http-response.adoc[]
+
+[[resources-route]]
+=== Trasy
+
+[[resources-route-add]]
+==== Tworzenie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-add/http-response.adoc[]
+
+[[resources-route-edit]]
+==== Edycja trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-edit/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-edit/http-response.adoc[]
+
+[[resources-route-delete]]
+==== Usuwanie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-delete/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-delete/http-response.adoc[]
+
+[[resources-route-get-by-id]]
+==== Pobieranie wybranej trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-get-by-id/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-get-by-id/http-response.adoc[]
+
+[[resources-route-add]]
+==== Pobieranie listy tras z obszaru
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-list-by-area/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-list-by-area/http-response.adoc[]

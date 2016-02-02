@@ -34,7 +34,7 @@ public class BaseControllerTest {
     protected RestDocumentationResultHandler document;
     protected MockMvc mockMvc;
     protected String userAuthorizationHeader = "Basic dGVzdEBleGFtcGxlLmNvbTphYWE=";
-
+    protected User user;
     @Before
     public void baseSetUp() throws Exception {
         this.document = document("{method-name}",
@@ -53,6 +53,6 @@ public class BaseControllerTest {
         RegisterUserRequest registerUserRequest = new RegisterUserRequest();
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("aaa");
-        User user = registerUser.createUser(registerUserRequest);
+        user = registerUser.createUser(registerUserRequest);
     }
 }

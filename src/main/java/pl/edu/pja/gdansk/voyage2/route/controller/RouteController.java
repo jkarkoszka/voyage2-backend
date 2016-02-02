@@ -34,13 +34,13 @@ public class RouteController {
 
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Route add(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    public Route addRoute(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         return addRoute.add(principal.getUser(), addRouteRequest);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Route edit(
+    @ResponseStatus(HttpStatus.OK)
+    public Route editRoute(
             @PathVariable String id,
             @Valid @RequestBody EditRouteRequest editRouteRequest,
             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
@@ -50,18 +50,18 @@ public class RouteController {
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String id, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) throws RouteNotFoundException, RouteAccessDeniedException {
+    public void deleteRoute(@PathVariable String id, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) throws RouteNotFoundException, RouteAccessDeniedException {
         deleteRoute.delete(principal.getUser(), id);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.CREATED)
-    public Route findOneById(@PathVariable String id) throws RouteNotFoundException {
+    @ResponseStatus(HttpStatus.OK)
+    public Route getRouteById(@PathVariable String id) throws RouteNotFoundException {
         return routeFetcher.findOneById(id);
     }
 
     @RequestMapping(value = "/routes/by-area", method = RequestMethod.GET)
-    public List<Route> findByArea(
+    public List<Route> listRoutesByArea(
             @RequestParam(name = "x1") double x1,
             @RequestParam(name = "y1") double y1,
             @RequestParam(name = "x2") double x2,

@@ -22,7 +22,7 @@ public class EditRoute {
         if (route == null) {
             throw new RouteNotFoundException();
         }
-        if (route.getUser().equals(user)) {
+        if (!route.getUser().equals(user)) {
             throw new RouteAccessDeniedException();
         }
         if (!route.getId().equals(editRouteRequest.getId())) {

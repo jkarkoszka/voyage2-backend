@@ -19,7 +19,7 @@ public class DeleteRoute {
         if (route == null) {
             throw new RouteNotFoundException();
         }
-        if (route.getUser().equals(user)) {
+        if (!route.getUser().equals(user)) {
             throw new RouteAccessDeniedException();
         }
         routeRepository.delete(route);

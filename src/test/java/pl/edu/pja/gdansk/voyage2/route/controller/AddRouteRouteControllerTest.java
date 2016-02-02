@@ -14,6 +14,7 @@ import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
+import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
 
 import java.util.Arrays;
 
@@ -26,10 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class RouteControllerTest extends BaseControllerTest {
+public class AddRouteRouteControllerTest extends BaseControllerTest {
 
     @Autowired
     private RouteRepository routeRepository;
+
+    @Autowired
+    private AddRoute addRoute;
 
     @Before
     public void setUp() {
@@ -39,9 +43,8 @@ public class RouteControllerTest extends BaseControllerTest {
     @Test
     public void routeAdd() throws Exception {
         //given
-        String routeName = "Testowa trasa";
         AddRouteRequest request = new AddRouteRequest();
-        request.setName(routeName);
+        request.setName("Testowa trasa");
         request.setPoints(Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)));
 
         //when//then
@@ -56,6 +59,7 @@ public class RouteControllerTest extends BaseControllerTest {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("[?($.name == 'Testowa trasa')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
                 .andExpect(jsonPath("$.photoElements").isEmpty())
