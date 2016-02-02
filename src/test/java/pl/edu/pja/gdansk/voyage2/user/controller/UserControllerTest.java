@@ -15,6 +15,7 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,6 +46,11 @@ public class UserControllerTest extends BaseControllerTest {
                                 this.objectMapper.writeValueAsString(request)
                             )
                 )
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("[?($.email == 'test@example.com')]").exists())
+                .andExpect(jsonPath("[?($.role == 'USER')]").exists())
+                .andExpect(jsonPath("$.password").doesNotExist())
+        ;
     }
 }

@@ -1,20 +1,17 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.geo.Point;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.route.domain.Route;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
 
@@ -22,7 +19,7 @@ import java.util.Arrays;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,8 +39,9 @@ public class RouteControllerTest extends BaseControllerTest {
     @Test
     public void routeAdd() throws Exception {
         //given
+        String routeName = "Testowa trasa";
         AddRouteRequest request = new AddRouteRequest();
-        request.setName("Testowa trasa");
+        request.setName(routeName);
         request.setPoints(Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)));
 
         //when//then
@@ -57,6 +55,11 @@ public class RouteControllerTest extends BaseControllerTest {
                                 )
                 )
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.user").isNotEmpty())
+                .andExpect(jsonPath("$.points").isNotEmpty())
+                .andExpect(jsonPath("$.photoElements").isEmpty())
+                .andExpect(jsonPath("$.textElements").isEmpty())
         ;
     }
 }
