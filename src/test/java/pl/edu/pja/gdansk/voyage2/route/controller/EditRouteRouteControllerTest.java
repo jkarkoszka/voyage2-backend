@@ -45,15 +45,20 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
     @Test
     public void routeEdit() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest();
-        addRouteRequest.setName("Testowa trasa");
-        addRouteRequest.setPoints(Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)));
+        AddRouteRequest addRouteRequest = new AddRouteRequest(
+                "Testowa trasa",
+                Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route = addRoute.add(user, addRouteRequest);
-        EditRouteRequest request = new EditRouteRequest();
-        request.setId(route.getId());
-        request.setName("Wyedytowana trasa");
-        request.setPoints(Arrays.asList(new Point(0, 1), new Point(6,5), new Point(12,56), new Point(2, 25)));
-
+        EditRouteRequest request = new EditRouteRequest(
+                route.getId(),
+                "Wyedytowana trasa",
+                Arrays.asList(new Point(0, 1), new Point(6,5), new Point(12,56), new Point(2, 25)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         //when//then
         this.mockMvc
                 .perform(
@@ -69,8 +74,8 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.name == 'Wyedytowana trasa')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
-                .andExpect(jsonPath("$.photoElements").isEmpty())
-                .andExpect(jsonPath("$.textElements").isEmpty())
+                .andExpect(jsonPath("$.photoElementPoints").isEmpty())
+                .andExpect(jsonPath("$.textElementPoints").isEmpty())
         ;
     }
 }

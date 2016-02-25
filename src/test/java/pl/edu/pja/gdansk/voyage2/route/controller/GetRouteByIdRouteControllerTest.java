@@ -44,9 +44,12 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
     @Test
     public void routeGetById() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest();
-        addRouteRequest.setName("Testowa trasa");
-        addRouteRequest.setPoints(Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)));
+        AddRouteRequest addRouteRequest = new AddRouteRequest(
+                "Testowa trasa",
+                Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route = addRoute.add(user, addRouteRequest);
 
         //when//then
@@ -61,8 +64,8 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.name == 'Testowa trasa')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
-                .andExpect(jsonPath("$.photoElements").isEmpty())
-                .andExpect(jsonPath("$.textElements").isEmpty())
+                .andExpect(jsonPath("$.photoElementPoints").isEmpty())
+                .andExpect(jsonPath("$.textElementPoints").isEmpty())
         ;
     }
 }

@@ -1,36 +1,54 @@
 package pl.edu.pja.gdansk.voyage2.route.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.geo.Point;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class EditRouteRequest {
 
+    @NotNull
     private String id;
+    @NotNull
     private String name;
+    @NotNull
     private List<Point> points;
+    @NotNull
+    private List<TextElementPointRequest> textElementPoints;
+    @NotNull
+    private List<PhotoElementPointRequest> photoElementPoints;
+
+    public EditRouteRequest(
+            @JsonProperty("id") String id,
+            @JsonProperty("name") String name,
+            @JsonProperty("points") List<Point> points,
+            @JsonProperty("textElementPoints") List<TextElementPointRequest> textElementPoints,
+            @JsonProperty("photoElementPoints") List<PhotoElementPointRequest> photoElementPoints) {
+        this.id = id;
+        this.name = name;
+        this.points = points;
+        this.textElementPoints = textElementPoints;
+        this.photoElementPoints = photoElementPoints;
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<Point> getPoints() {
         return points;
     }
 
-    public void setPoints(List<Point> points) {
-        this.points = points;
+    public List<TextElementPointRequest> getTextElementPoints() {
+        return textElementPoints;
+    }
+
+    public List<PhotoElementPointRequest> getPhotoElementPoints() {
+        return photoElementPoints;
     }
 }

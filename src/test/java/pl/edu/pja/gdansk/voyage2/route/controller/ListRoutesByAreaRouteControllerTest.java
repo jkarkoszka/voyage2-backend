@@ -45,19 +45,28 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
     @Test
     public void routeListByArea() throws Exception {
         //given
-        AddRouteRequest addRouteRequest1 = new AddRouteRequest();
-        addRouteRequest1.setName("Testowa trasa 1");
-        addRouteRequest1.setPoints(Arrays.asList(new Point(0.5D, 0.5D), new Point(1,0.5D), new Point(2,0.5D), new Point(3, 0.5D)));
+        AddRouteRequest addRouteRequest1 = new AddRouteRequest(
+                "Testowa trasa 1",
+                Arrays.asList(new Point(0.5D, 0.5D), new Point(1,0.5D), new Point(2,0.5D), new Point(3, 0.5D)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route1 = addRoute.add(user, addRouteRequest1);
 
-        AddRouteRequest addRouteRequest2 = new AddRouteRequest();
-        addRouteRequest2.setName("Testowa trasa 2");
-        addRouteRequest2.setPoints(Arrays.asList(new Point(0.7D, 0.5D), new Point(1,0.7D), new Point(2,0.4D), new Point(3, 0.3D)));
+        AddRouteRequest addRouteRequest2 = new AddRouteRequest(
+                "Testowa trasa 2",
+                Arrays.asList(new Point(0.7D, 0.5D), new Point(1,0.7D), new Point(2,0.4D), new Point(3, 0.3D)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route2 = addRoute.add(user, addRouteRequest2);
 
-        AddRouteRequest addRouteRequest3 = new AddRouteRequest();
-        addRouteRequest3.setName("Testowa trasa 3");
-        addRouteRequest3.setPoints(Arrays.asList(new Point(0, 5), new Point(1,5), new Point(2,5), new Point(3, 5)));
+        AddRouteRequest addRouteRequest3 = new AddRouteRequest(
+                "Testowa trasa 3",
+                Arrays.asList(new Point(0, 5), new Point(1,5), new Point(2,5), new Point(3, 5)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route3 = addRoute.add(user, addRouteRequest3);
 
         assertThat(routeRepository.findAll()).hasSize(3);
@@ -82,14 +91,14 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.[0].name == 'Testowa trasa 1')]").exists())
                 .andExpect(jsonPath("$.[0].user").isNotEmpty())
                 .andExpect(jsonPath("$.[0].points").isNotEmpty())
-                .andExpect(jsonPath("$.[0].photoElements").isEmpty())
-                .andExpect(jsonPath("$.[0].textElements").isEmpty())
+                .andExpect(jsonPath("$.[0].photoElementPoints").isEmpty())
+                .andExpect(jsonPath("$.[0].textElementPoints").isEmpty())
                 .andExpect(jsonPath("$.[1].id").isNotEmpty())
                 .andExpect(jsonPath("[?($.[1].name == 'Testowa trasa 2')]").exists())
                 .andExpect(jsonPath("$.[1].user").isNotEmpty())
                 .andExpect(jsonPath("$.[1].points").isNotEmpty())
-                .andExpect(jsonPath("$.[1].photoElements").isEmpty())
-                .andExpect(jsonPath("$.[1].textElements").isEmpty())
+                .andExpect(jsonPath("$.[1].photoElementPoints").isEmpty())
+                .andExpect(jsonPath("$.[1].textElementPoints").isEmpty())
                 .andReturn().getResponse().getContentAsString()
         ;
 

@@ -44,9 +44,12 @@ public class DeleteRouteByIdRouteControllerTest extends BaseControllerTest {
     @Test
     public void routeDelete() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest();
-        addRouteRequest.setName("Testowa trasa");
-        addRouteRequest.setPoints(Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)));
+        AddRouteRequest addRouteRequest = new AddRouteRequest(
+                "Testowa trasa",
+                Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
         Route route = addRoute.add(user, addRouteRequest);
 
         //when//then
