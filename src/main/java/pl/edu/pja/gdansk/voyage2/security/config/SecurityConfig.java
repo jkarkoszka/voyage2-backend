@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.savedrequest.NullRequestCache;
 import pl.edu.pja.gdansk.voyage2.security.service.SecuredUserDetailsService;
 
@@ -17,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        AuthenticationEntryPoint authenticationEntryPoint = new RestAuthenticationEntryPoint();
+
         http
                 .authorizeRequests()
                 .antMatchers("user/token").authenticated()
@@ -30,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .csrf()
                 .disable();
     }
