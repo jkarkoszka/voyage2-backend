@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestCache()
                 .requestCache(new NullRequestCache())
                 .and()
-                .httpBasic()
+                .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
                 .csrf()
