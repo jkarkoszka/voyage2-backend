@@ -9,6 +9,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
@@ -34,7 +35,7 @@ public class BaseControllerTest {
     protected RestDocumentationResultHandler document;
     protected MockMvc mockMvc;
     protected String userAuthorizationHeader = "Basic dGVzdEBleGFtcGxlLmNvbTphYWE=";
-    protected User user;
+    protected SecuredUserDetails user;
     @Before
     public void baseSetUp() throws Exception {
         this.document = document("{method-name}",
@@ -53,6 +54,6 @@ public class BaseControllerTest {
         RegisterUserRequest registerUserRequest = new RegisterUserRequest();
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("aaa");
-        user = registerUser.createUser(registerUserRequest);
+        user = new SecuredUserDetails(registerUser.createUser(registerUserRequest));
     }
 }

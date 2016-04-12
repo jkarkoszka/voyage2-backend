@@ -11,7 +11,9 @@ import pl.edu.pja.gdansk.voyage2.route.mapper.PointsMapper;
 import pl.edu.pja.gdansk.voyage2.route.mapper.TextElementPointsMapper;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.EditRouteRequest;
+import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
+import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 
 @Component
 public class EditRoute {
@@ -24,13 +26,15 @@ public class EditRoute {
     private PhotoElementPointsMapper photoElementPointsMapper;
     @Autowired
     private TextElementPointsMapper textElementPointsMapper;
+    @Autowired
+    private UserRepository userRepository;
 
-    public Route edit(User user, String id, EditRouteRequest editRouteRequest) throws RouteNotFoundException, RouteIdsNotMatchException, RouteAccessDeniedException {
+    public Route edit(SecuredUserDetails securedUserDetails, String id, EditRouteRequest editRouteRequest) throws RouteNotFoundException, RouteIdsNotMatchException, RouteAccessDeniedException {
         Route route = routeRepository.findOne(id);
         if (route == null) {
             throw new RouteNotFoundException();
         }
-        if (!route.getUser().equals(user)) {
+        if (!route.getUser().equals(userRepository.findByEmail(securedUserDetails.getUsername()))) {
             throw new RouteAccessDeniedException();
         }
         if (!route.getId().equals(editRouteRequest.getId())) {

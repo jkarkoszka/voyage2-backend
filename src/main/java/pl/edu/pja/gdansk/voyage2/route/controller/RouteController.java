@@ -35,7 +35,7 @@ public class RouteController {
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Route addRoute(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
-        return addRoute.add(principal.getUser(), addRouteRequest);
+        return addRoute.add(principal, addRouteRequest);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.PUT)
@@ -45,13 +45,13 @@ public class RouteController {
             @Valid @RequestBody EditRouteRequest editRouteRequest,
             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
     ) throws RouteNotFoundException, RouteIdsNotMatchException, RouteAccessDeniedException {
-        return editRoute.edit(principal.getUser(), id, editRouteRequest);
+        return editRoute.edit(principal, id, editRouteRequest);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRoute(@PathVariable String id, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) throws RouteNotFoundException, RouteAccessDeniedException {
-        deleteRoute.delete(principal.getUser(), id);
+        deleteRoute.delete(principal, id);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.GET)
