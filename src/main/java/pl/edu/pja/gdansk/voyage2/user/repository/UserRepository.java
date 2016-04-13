@@ -5,5 +5,5 @@ import pl.edu.pja.gdansk.voyage2.user.domain.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-    User findByEmail(String email);
+    User findByUsername(String username);
 }

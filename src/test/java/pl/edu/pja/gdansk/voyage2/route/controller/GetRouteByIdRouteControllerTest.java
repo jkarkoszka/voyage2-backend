@@ -56,7 +56,7 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
         this.mockMvc
                 .perform(
                         get("/route/{id}", route.getId())
-                                .with(httpBasic("test@example.com", "aaa"))
+                                .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(status().isOk())

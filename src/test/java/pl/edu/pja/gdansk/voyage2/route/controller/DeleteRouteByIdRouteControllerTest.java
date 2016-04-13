@@ -56,7 +56,7 @@ public class DeleteRouteByIdRouteControllerTest extends BaseControllerTest {
         this.mockMvc
                 .perform(
                         delete("/route/{id}", route.getId())
-                                .with(httpBasic("test@example.com", "aaa"))
+                                .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(status().isNoContent())

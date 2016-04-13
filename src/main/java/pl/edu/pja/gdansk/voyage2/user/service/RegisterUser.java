@@ -17,9 +17,11 @@ public class RegisterUser {
 
     public User createUser(RegisterUserRequest registerUserRequest) {
         User user = new User();
+        user.setUsername(registerUserRequest.getUsername());
         user.setEmail(registerUserRequest.getEmail());
         user.setPasswordHash(passwordEncryptor.encrypt(registerUserRequest.getPassword()));
         user.setRole(UserRole.USER);
+        user.setPublic(registerUserRequest.isPublic());
         return userRepository.save(user);
     }
 }

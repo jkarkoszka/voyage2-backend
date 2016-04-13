@@ -34,7 +34,6 @@ public class BaseControllerTest {
     public final RestDocumentation restDocumentation = new RestDocumentation("build/generated-snippets");
     protected RestDocumentationResultHandler document;
     protected MockMvc mockMvc;
-    protected String userAuthorizationHeader = "Basic dGVzdEBleGFtcGxlLmNvbTphYWE=";
     protected SecuredUserDetails user;
     @Before
     public void baseSetUp() throws Exception {
@@ -52,8 +51,10 @@ public class BaseControllerTest {
     private void createUser() {
         userRepository.deleteAll();
         RegisterUserRequest registerUserRequest = new RegisterUserRequest();
+        registerUserRequest.setUsername("test");
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("aaa");
+        registerUserRequest.setPublic(true);
         user = new SecuredUserDetails(registerUser.createUser(registerUserRequest));
     }
 }

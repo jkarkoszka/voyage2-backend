@@ -32,7 +32,7 @@ public class AddRoute {
         route.setPoints(pointsMapper.map(addRouteRequest.getPoints()));
         route.setTextElementPoints(textElementPointsMapper.map(addRouteRequest.getTextElementPoints()));
         route.setPhotoElementPoints(photoElementPointsMapper.map(addRouteRequest.getPhotoElementPoints()));
-        route.setUser(userRepository.findByEmail(securedUserDetails.getUsername()));
+        route.setUser(userRepository.findByUsername(securedUserDetails.getUsername()));
         return routeRepository.save(route);
     }
 }

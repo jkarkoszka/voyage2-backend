@@ -63,7 +63,7 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
         this.mockMvc
                 .perform(
                         put("/route/{id}", route.getId())
-                                .with(httpBasic("test@example.com", "aaa"))
+                                .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(
                                         this.objectMapper.writeValueAsString(request)

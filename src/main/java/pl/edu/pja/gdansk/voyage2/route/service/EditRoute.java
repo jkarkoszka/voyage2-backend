@@ -34,7 +34,7 @@ public class EditRoute {
         if (route == null) {
             throw new RouteNotFoundException();
         }
-        if (!route.getUser().equals(userRepository.findByEmail(securedUserDetails.getUsername()))) {
+        if (!route.getUser().equals(userRepository.findByUsername(securedUserDetails.getUsername()))) {
             throw new RouteAccessDeniedException();
         }
         if (!route.getId().equals(editRouteRequest.getId())) {

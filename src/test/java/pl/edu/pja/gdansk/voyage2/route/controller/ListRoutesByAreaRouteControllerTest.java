@@ -83,7 +83,7 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                                 .param("y3", "1")
                                 .param("x4", "0")
                                 .param("y4", "1")
-                                .with(httpBasic("test@example.com", "aaa"))
+                                .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(status().isOk())

@@ -21,8 +21,8 @@ public class SecurityController {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     UserTokenResponse createToken(HttpSession session, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
-        User user = userRepository.findByEmail(principal.getUsername());
-        return new UserTokenResponse(session.getId(), user.getEmail(), user.getAuthorities());
+        User user = userRepository.findByUsername(principal.getUsername());
+        return new UserTokenResponse(session.getId(), user.getUsername(), user.getAuthorities());
     }
 
     @RequestMapping(value = "/user/token", method = RequestMethod.DELETE)

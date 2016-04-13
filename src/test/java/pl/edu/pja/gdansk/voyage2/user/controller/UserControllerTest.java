@@ -35,9 +35,10 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void userRegister() throws Exception {
         RegisterUserRequest request = new RegisterUserRequest();
+        request.setUsername("test");
         request.setEmail("test@example.com");
         request.setPassword("password");
-
+        request.setPublic(true);
         this.mockMvc
                 .perform(
                         post("/user")
@@ -48,8 +49,10 @@ public class UserControllerTest extends BaseControllerTest {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("[?($.username == 'test')]").exists())
                 .andExpect(jsonPath("[?($.email == 'test@example.com')]").exists())
                 .andExpect(jsonPath("[?($.role == 'USER')]").exists())
+                .andExpect(jsonPath("[?($.public == true)]").exists())
                 .andExpect(jsonPath("$.password").doesNotExist())
         ;
     }

@@ -56,7 +56,7 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
         this.mockMvc
                 .perform(
                         post("/routes")
-                                .with(httpBasic("test@example.com", "aaa"))
+                                .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(
                                         this.objectMapper.writeValueAsString(request)

@@ -5,6 +5,6 @@ import org.springframework.security.core.userdetails.User;
 public class SecuredUserDetails extends User {
 
     public SecuredUserDetails(pl.edu.pja.gdansk.voyage2.user.domain.User user) {
-        super(user.getEmail(), user.getPasswordHash(), user.getAuthorities());
+        super(user.getUsername(), user.getPasswordHash(), user.getAuthorities());
     }
 }

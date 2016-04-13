@@ -40,18 +40,20 @@ public class SecurityControllerTest extends BaseControllerTest {
     public void userTokenCreate() throws Exception {
         //given
         RegisterUserRequest request = new RegisterUserRequest();
+        request.setUsername("test");
         request.setEmail("test@example.com");
         request.setPassword("aaa");
+        request.setPublic(true);
         registerUser.createUser(request);
 
         //when//then
         this.mockMvc
             .perform(
-                post("/user/token").contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization", "Basic dGVzdEBleGFtcGxlLmNvbTphYWE=")
+                post("/user/token").contentType(MediaType.APPLICATION_JSON_UTF8).header("Authorization", "Basic dGVzdDphYWE=")
             )
             .andExpect(status().is(HttpStatus.OK.value()))
             .andExpect(jsonPath("$.token").isNotEmpty())
-            .andExpect(jsonPath("[?($.username == 'test@example.com')]").exists())
+            .andExpect(jsonPath("[?($.username == 'test')]").exists())
         ;
     }
 }
