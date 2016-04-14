@@ -30,7 +30,7 @@ public class ResetPassword {
             throw new UserNotFound();
         }
 
-        String newPassword = RandomStringUtils.random(7);
+        String newPassword = RandomStringUtils.randomAlphabetic(7);
 
         String[] to = {user.getEmail()};
         SendGrid.Email email = new SendGrid.Email();
