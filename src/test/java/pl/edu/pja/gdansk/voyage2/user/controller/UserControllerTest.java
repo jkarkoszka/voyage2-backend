@@ -53,6 +53,8 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.email == 'test@example.com')]").exists())
                 .andExpect(jsonPath("[?($.role == 'USER')]").exists())
                 .andExpect(jsonPath("[?($.public == true)]").exists())
+                .andExpect(jsonPath("[?($.passwordStatus == 'NORMAL')]").exists())
+                .andExpect(jsonPath("[?($.avatar == null)]").exists())
                 .andExpect(jsonPath("$.password").doesNotExist())
         ;
     }

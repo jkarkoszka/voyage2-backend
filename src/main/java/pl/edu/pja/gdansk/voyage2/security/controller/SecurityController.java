@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.security.response.UserTokenResponse;
+import pl.edu.pja.gdansk.voyage2.user.domain.PasswordStatus;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 
@@ -22,6 +23,9 @@ public class SecurityController {
     public @ResponseBody
     UserTokenResponse createToken(HttpSession session, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         User user = userRepository.findByUsername(principal.getUsername());
+        if (user.getPasswordStatus().equals(PasswordStatus.ONETIME)) {
+            user.setPasswordStatus(PasswordStatus.EXPIRED);
+        }
         return new UserTokenResponse(session.getId(), user.getUsername(), user.getAuthorities());
     }
 

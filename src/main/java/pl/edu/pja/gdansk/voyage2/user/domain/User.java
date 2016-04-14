@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import pl.edu.pja.gdansk.voyage2.attachment.domain.Attachment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,8 @@ public class User {
     private String passwordHash;
     private UserRole role = UserRole.USER;
     private boolean isPublic;
+    private Attachment avatar;
+    private PasswordStatus passwordStatus = PasswordStatus.NORMAL;
 
     public String getId() {
         return id;
@@ -74,6 +77,22 @@ public class User {
         return authorities;
     }
 
+    public Attachment getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Attachment avatar) {
+        this.avatar = avatar;
+    }
+
+    public PasswordStatus getPasswordStatus() {
+        return passwordStatus;
+    }
+
+    public void setPasswordStatus(PasswordStatus passwordStatus) {
+        this.passwordStatus = passwordStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,7 +105,9 @@ public class User {
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (passwordHash != null ? !passwordHash.equals(user.passwordHash) : user.passwordHash != null) return false;
-        return role == user.role;
+        if (role != user.role) return false;
+        if (avatar != null ? !avatar.equals(user.avatar) : user.avatar != null) return false;
+        return passwordStatus == user.passwordStatus;
 
     }
 
@@ -98,6 +119,8 @@ public class User {
         result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (isPublic ? 1 : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (passwordStatus != null ? passwordStatus.hashCode() : 0);
         return result;
     }
 }

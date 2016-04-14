@@ -28,7 +28,7 @@ public class AttachmentController {
 
     @RequestMapping(value = "/attachments", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Attachment> getUserAttachements(@AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    public List<Attachment> getUserAttachments(@AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         return attachmentFetcher.findByPrinicpal(principal);
     }
 }
