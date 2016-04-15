@@ -13,6 +13,7 @@ import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
+import pl.edu.pja.gdansk.voyage2.user.service.ActivateUser;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -30,11 +31,13 @@ public class BaseControllerTest {
     private UserRepository userRepository;
     @Autowired
     private RegisterUser registerUser;
+    @Autowired
+    private ActivateUser activateUser;
     @Rule
     public final RestDocumentation restDocumentation = new RestDocumentation("build/generated-snippets");
     protected RestDocumentationResultHandler document;
     protected MockMvc mockMvc;
-    protected SecuredUserDetails user;
+    protected SecuredUserDetails activatedUser;
     @Before
     public void baseSetUp() throws Exception {
         this.document = document("{method-name}",
@@ -45,16 +48,18 @@ public class BaseControllerTest {
                 .apply(springSecurity())
                 .alwaysDo(this.document)
                 .build();
-        createUser();
+        User user = createUser();
+        activateUser.activate(user.getActivationToken());
+        activatedUser = new SecuredUserDetails(userRepository.findOne(user.getId()));
     }
 
-    private void createUser() {
+    private User createUser() {
         userRepository.deleteAll();
         RegisterUserRequest registerUserRequest = new RegisterUserRequest();
         registerUserRequest.setUsername("test");
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("aaa");
         registerUserRequest.setPublic(true);
-        user = new SecuredUserDetails(registerUser.createUser(registerUserRequest));
+        return registerUser.createUser(registerUserRequest);
     }
 }

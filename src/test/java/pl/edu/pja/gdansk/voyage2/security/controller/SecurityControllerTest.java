@@ -54,6 +54,7 @@ public class SecurityControllerTest extends BaseControllerTest {
             .andExpect(status().is(HttpStatus.OK.value()))
             .andExpect(jsonPath("$.token").isNotEmpty())
             .andExpect(jsonPath("[?($.username == 'test')]").exists())
+            .andExpect(jsonPath("[?($.passwordStatus == 'NORMAL')]").exists())
         ;
     }
 }

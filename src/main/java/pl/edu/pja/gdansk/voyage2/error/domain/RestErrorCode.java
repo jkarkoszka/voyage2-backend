@@ -6,4 +6,12 @@ public class RestErrorCode {
     public static final int ROUTE_NOT_FOUND_IN_THE_DATABASE = 2;
     public static final int ROUTE_ID_FROM_PATH_DOES_NOT_MATCH_TO_THE_ONE_FROM_BODY = 3;
     public static final int ROUTE_ACCESS_DENIED = 4;
+    public static final int USER_NOT_FOUND = 5;
+    public static final int SENDING_ACTIVATION_LINK_FAILED = 6;
+    public static final int SENDING_NEW_PASSWORD_FAILED = 7;
+    public static final int UPLOAD_FILE_FAILED = 8;
+    public static final int SENDING_EMAIL_FAILED = 9;
+    public static final int EMAIL_IS_ALREADY_USED = 10;
+    public static final int USERNAME_IS_ALREADY_USED = 11;
+
 }

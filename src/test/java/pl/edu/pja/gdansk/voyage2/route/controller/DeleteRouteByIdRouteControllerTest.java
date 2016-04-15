@@ -50,7 +50,7 @@ public class DeleteRouteByIdRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
-        Route route = addRoute.add(user, addRouteRequest);
+        Route route = addRoute.add(activatedUser, addRouteRequest);
 
         //when//then
         this.mockMvc

@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import pl.edu.pja.gdansk.voyage2.storage.service.exception.UploadException;
+import pl.edu.pja.gdansk.voyage2.storage.service.exception.UploadFileException;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class StorageService {
             objectMetadata.setHeader("filename", multipartFile.getOriginalFilename());
             transferManager.upload("voyage2", fileName, multipartFile.getInputStream(), objectMetadata);
         } catch (IOException e) {
-            throw new UploadException();
+            throw new UploadFileException(e);
         }
     }
 }

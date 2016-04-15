@@ -1,4 +1,4 @@
-package pl.edu.pja.gdansk.voyage2.error.controller;
+package pl.edu.pja.gdansk.voyage2.route.controller;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import pl.edu.pja.gdansk.voyage2.route.exception.RouteIdsNotMatchException;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteNotFoundException;
 
 @ControllerAdvice
-public class ErrorController {
+public class RouteErrorController {
 
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

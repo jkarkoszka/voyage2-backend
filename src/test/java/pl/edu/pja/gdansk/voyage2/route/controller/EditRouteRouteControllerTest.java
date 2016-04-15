@@ -51,7 +51,7 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
-        Route route = addRoute.add(user, addRouteRequest);
+        Route route = addRoute.add(activatedUser, addRouteRequest);
         EditRouteRequest request = new EditRouteRequest(
                 route.getId(),
                 "Wyedytowana trasa",
@@ -59,6 +59,7 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
+
         //when//then
         this.mockMvc
                 .perform(

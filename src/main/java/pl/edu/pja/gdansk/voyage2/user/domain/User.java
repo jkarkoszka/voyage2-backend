@@ -26,6 +26,9 @@ public class User {
     private boolean isPublic;
     private Attachment avatar;
     private PasswordStatus passwordStatus = PasswordStatus.NORMAL;
+    private boolean isActive = false;
+    @JsonIgnore
+    private String activationToken;
 
     public String getId() {
         return id;
@@ -91,6 +94,22 @@ public class User {
 
     public void setPasswordStatus(PasswordStatus passwordStatus) {
         this.passwordStatus = passwordStatus;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
     }
 
     @Override

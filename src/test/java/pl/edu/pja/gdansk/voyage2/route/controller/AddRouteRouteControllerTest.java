@@ -34,9 +34,6 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
     @Autowired
     private RouteRepository routeRepository;
 
-    @Autowired
-    private AddRoute addRoute;
-
     @Before
     public void setUp() {
         routeRepository.deleteAll();

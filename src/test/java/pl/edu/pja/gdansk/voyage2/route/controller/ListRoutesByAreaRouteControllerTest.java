@@ -51,7 +51,7 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
-        Route route1 = addRoute.add(user, addRouteRequest1);
+        Route route1 = addRoute.add(activatedUser, addRouteRequest1);
 
         AddRouteRequest addRouteRequest2 = new AddRouteRequest(
                 "Testowa trasa 2",
@@ -59,7 +59,7 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
-        Route route2 = addRoute.add(user, addRouteRequest2);
+        Route route2 = addRoute.add(activatedUser, addRouteRequest2);
 
         AddRouteRequest addRouteRequest3 = new AddRouteRequest(
                 "Testowa trasa 3",
@@ -67,7 +67,7 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 Arrays.asList(),
                 Arrays.asList()
         );
-        Route route3 = addRoute.add(user, addRouteRequest3);
+        Route route3 = addRoute.add(activatedUser, addRouteRequest3);
 
         assertThat(routeRepository.findAll()).hasSize(3);
 
