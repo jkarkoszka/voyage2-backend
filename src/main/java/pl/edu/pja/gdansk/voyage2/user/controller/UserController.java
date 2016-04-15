@@ -36,8 +36,9 @@ public class UserController {
 
     @RequestMapping(value = "/user/activationToken/{activationToken}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public void activate(@PathVariable String activationToken) {
+    public @ResponseBody String activate(@PathVariable String activationToken) {
         activateUser.activate(activationToken);
+        return "Konto zostało aktywowane.";
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
