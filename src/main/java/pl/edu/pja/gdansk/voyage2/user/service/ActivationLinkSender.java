@@ -20,7 +20,7 @@ public class ActivationLinkSender {
         email.setFrom("\"Voyage Voyage\" <noreply@voyage2-staging.herokuapp.com>");
         email.setTo(to);
         email.setSubject("Voyage Voyage - Aktywacja konta");
-        String activationUrl = "http://voyage2-staging.herokuapp.com/user/activationToken/\""+ user.getActivationToken();
+        String activationUrl = "http://voyage2-staging.herokuapp.com/user/activationToken/"+ user.getActivationToken();
         email.setHtml("Link aktywacyjny:  <a href=\"" + activationUrl + "\" target=\"_blank\">" + activationUrl + "</a>");
         SendGrid.Response response = emailService.sendEmail(email);
         if (response.getCode() != 200) {
