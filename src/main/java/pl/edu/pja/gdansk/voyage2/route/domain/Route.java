@@ -14,6 +14,10 @@ public class Route {
     @Id
     private String id;
     private String name;
+    private String description;
+    private Integer distance;
+    private Integer startedAt;
+    private Integer finishedAt;
     private GeoJsonLineString points;
     @DBRef
     private User user;
@@ -53,5 +57,37 @@ public class Route {
 
     public void setElements(List<Element> elements) {
         this.elements = elements;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+    public Integer getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Integer startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Integer getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Integer finishedAt) {
+        this.finishedAt = finishedAt;
     }
 }

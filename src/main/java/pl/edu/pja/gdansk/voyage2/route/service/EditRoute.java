@@ -37,6 +37,10 @@ public class EditRoute {
             throw new RouteIdsNotMatchException();
         }
         route.setName(editRouteRequest.getName());
+        route.setDescription(editRouteRequest.getDescription());
+        route.setDistance(editRouteRequest.getDistance());
+        route.setStartedAt(editRouteRequest.getStartedAt());
+        route.setFinishedAt(editRouteRequest.getFinishedAt());
         route.setPoints(pointsMapper.map(editRouteRequest.getPoints()));
         route.setElements(elementMapper.map(editRouteRequest));
         return routeRepository.save(route);

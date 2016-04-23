@@ -25,6 +25,10 @@ public class AddRoute {
     public Route add(SecuredUserDetails securedUserDetails, AddRouteRequest addRouteRequest) {
         Route route = new Route();
         route.setName(addRouteRequest.getName());
+        route.setDescription(addRouteRequest.getDescription());
+        route.setDistance(addRouteRequest.getDistance());
+        route.setStartedAt(addRouteRequest.getStartedAt());
+        route.setFinishedAt(addRouteRequest.getFinishedAt());
         route.setPoints(pointsMapper.map(addRouteRequest.getPoints()));
         route.setElements(elementMapper.map(addRouteRequest));
         route.setUser(userRepository.findByUsername(securedUserDetails.getUsername()));

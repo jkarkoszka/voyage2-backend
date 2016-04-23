@@ -1,5 +1,6 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,10 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
         //given
         AddRouteRequest request = new AddRouteRequest(
                 "Testowa trasa",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
                 Arrays.asList(new PhotoElementRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementRequest("bca", "opis zdjecia 2", new Point(9, 9))),
                 Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2)))
@@ -61,6 +66,10 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("[?($.name == 'Testowa trasa')]").exists())
+                .andExpect(jsonPath("[?($.description == 'Opis trasy')]").exists())
+                .andExpect(jsonPath("[?($.distance == '100')]").exists())
+                .andExpect(jsonPath("[?($.startedAt == '123125345')]").exists())
+                .andExpect(jsonPath("[?($.finishedAt == '223423423')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
                 .andExpect(jsonPath("$.elements").isNotEmpty())

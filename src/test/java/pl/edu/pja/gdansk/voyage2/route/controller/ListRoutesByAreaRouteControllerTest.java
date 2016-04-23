@@ -1,5 +1,6 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +48,10 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
         //given
         AddRouteRequest addRouteRequest1 = new AddRouteRequest(
                 "Testowa trasa 1",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
                 Arrays.asList(new Point(0.5D, 0.5D), new Point(1,0.5D), new Point(2,0.5D), new Point(3, 0.5D)),
                 Arrays.asList(),
                 Arrays.asList()
@@ -55,6 +60,10 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
 
         AddRouteRequest addRouteRequest2 = new AddRouteRequest(
                 "Testowa trasa 2",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
                 Arrays.asList(new Point(0.7D, 0.5D), new Point(1,0.7D), new Point(2,0.4D), new Point(3, 0.3D)),
                 Arrays.asList(),
                 Arrays.asList()
@@ -63,6 +72,10 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
 
         AddRouteRequest addRouteRequest3 = new AddRouteRequest(
                 "Testowa trasa 3",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
                 Arrays.asList(new Point(0, 5), new Point(1,5), new Point(2,5), new Point(3, 5)),
                 Arrays.asList(),
                 Arrays.asList()

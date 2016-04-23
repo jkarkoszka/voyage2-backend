@@ -1,5 +1,6 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,10 @@ public class DeleteRouteByIdRouteControllerTest extends BaseControllerTest {
         //given
         AddRouteRequest addRouteRequest = new AddRouteRequest(
                 "Testowa trasa",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
                 Arrays.asList(),
                 Arrays.asList()
