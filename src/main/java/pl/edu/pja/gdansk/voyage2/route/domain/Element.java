@@ -1,15 +1,12 @@
 package pl.edu.pja.gdansk.voyage2.route.domain;
 
+
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import pl.edu.pja.gdansk.voyage2.attachment.domain.Attachment;
 
-public class PhotoElementPoint {
-
+abstract public class Element {
     @DBRef
     private Route route;
-    @DBRef
-    private Attachment attachment;
     private String value;
     private GeoJsonPoint point;
 
@@ -19,14 +16,6 @@ public class PhotoElementPoint {
 
     public void setRoute(Route route) {
         this.route = route;
-    }
-
-    public Attachment getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(Attachment attachment) {
-        this.attachment = attachment;
     }
 
     public String getValue() {

@@ -75,8 +75,7 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.name == 'Wyedytowana trasa')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
-                .andExpect(jsonPath("$.photoElementPoints").isEmpty())
-                .andExpect(jsonPath("$.textElementPoints").isEmpty())
+                .andExpect(jsonPath("$.elements").isEmpty())
         ;
     }
 }

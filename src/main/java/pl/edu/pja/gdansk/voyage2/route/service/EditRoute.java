@@ -6,13 +6,11 @@ import pl.edu.pja.gdansk.voyage2.route.domain.Route;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteAccessDeniedException;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteIdsNotMatchException;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteNotFoundException;
-import pl.edu.pja.gdansk.voyage2.route.mapper.PhotoElementPointsMapper;
+import pl.edu.pja.gdansk.voyage2.route.mapper.ElementMapper;
 import pl.edu.pja.gdansk.voyage2.route.mapper.PointsMapper;
-import pl.edu.pja.gdansk.voyage2.route.mapper.TextElementPointsMapper;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.EditRouteRequest;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
-import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 
 @Component
@@ -23,9 +21,7 @@ public class EditRoute {
     @Autowired
     private PointsMapper pointsMapper;
     @Autowired
-    private PhotoElementPointsMapper photoElementPointsMapper;
-    @Autowired
-    private TextElementPointsMapper textElementPointsMapper;
+    private ElementMapper elementMapper;
     @Autowired
     private UserRepository userRepository;
 
@@ -42,8 +38,7 @@ public class EditRoute {
         }
         route.setName(editRouteRequest.getName());
         route.setPoints(pointsMapper.map(editRouteRequest.getPoints()));
-        route.setTextElementPoints(textElementPointsMapper.map(editRouteRequest.getTextElementPoints()));
-        route.setPhotoElementPoints(photoElementPointsMapper.map(editRouteRequest.getPhotoElementPoints()));
+        route.setElements(elementMapper.map(editRouteRequest));
         return routeRepository.save(route);
     }
 }

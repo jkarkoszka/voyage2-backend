@@ -17,8 +17,7 @@ public class Route {
     private GeoJsonLineString points;
     @DBRef
     private User user;
-    private List<PhotoElementPoint> photoElementPoints;
-    private List<TextElementPoint> textElementPoints;
+    private List<Element> elements;
 
     public String getId() {
         return id;
@@ -48,19 +47,11 @@ public class Route {
         this.user = user;
     }
 
-    public List<PhotoElementPoint> getPhotoElementPoints() {
-        return photoElementPoints;
+    public List<Element> getElements() {
+        return elements;
     }
 
-    public void setPhotoElementPoints(List<PhotoElementPoint> photoElementPoints) {
-        this.photoElementPoints = photoElementPoints;
-    }
-
-    public List<TextElementPoint> getTextElementPoints() {
-        return textElementPoints;
-    }
-
-    public void setTextElementPoints(List<TextElementPoint> textElementPoints) {
-        this.textElementPoints = textElementPoints;
+    public void setElements(List<Element> elements) {
+        this.elements = elements;
     }
 }

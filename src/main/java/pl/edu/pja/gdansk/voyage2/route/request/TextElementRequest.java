@@ -4,24 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.geo.Point;
 
-public class PhotoElementPointRequest {
+public class TextElementRequest {
 
-    private String attachmentId;
-    private String value;
-    private Point point;
+    protected String value;
+    protected Point point;
 
     @JsonCreator
-    public PhotoElementPointRequest(
-            @JsonProperty("attachmentId") String attachmentId,
+    public TextElementRequest(
             @JsonProperty("value") String value,
             @JsonProperty("point") Point point) {
-        this.attachmentId = attachmentId;
         this.value = value;
         this.point = point;
-    }
-
-    public String getAttachmentId() {
-        return attachmentId;
     }
 
     public String getValue() {
@@ -31,4 +24,6 @@ public class PhotoElementPointRequest {
     public Point getPoint() {
         return point;
     }
+
+
 }

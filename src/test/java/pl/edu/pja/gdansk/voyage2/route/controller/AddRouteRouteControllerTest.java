@@ -14,9 +14,8 @@ import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
-import pl.edu.pja.gdansk.voyage2.route.request.PhotoElementPointRequest;
-import pl.edu.pja.gdansk.voyage2.route.request.TextElementPointRequest;
-import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
+import pl.edu.pja.gdansk.voyage2.route.request.PhotoElementRequest;
+import pl.edu.pja.gdansk.voyage2.route.request.TextElementRequest;
 
 import java.util.Arrays;
 
@@ -45,8 +44,8 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
         AddRouteRequest request = new AddRouteRequest(
                 "Testowa trasa",
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
-                Arrays.asList(new TextElementPointRequest("poczatek trasy", new Point(1, 0)), new TextElementPointRequest("koniec trasy", new Point(16, 2))),
-                Arrays.asList(new PhotoElementPointRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementPointRequest("bca", "opis zdjecia 2", new Point(9, 9)))
+                Arrays.asList(new PhotoElementRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementRequest("bca", "opis zdjecia 2", new Point(9, 9))),
+                Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2)))
         );
 
         //when//then
@@ -64,8 +63,7 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.name == 'Testowa trasa')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
-                .andExpect(jsonPath("$.photoElementPoints").isEmpty())
-                .andExpect(jsonPath("$.textElementPoints").isNotEmpty())
+                .andExpect(jsonPath("$.elements").isNotEmpty())
         ;
     }
 }

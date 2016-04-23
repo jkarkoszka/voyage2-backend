@@ -91,14 +91,12 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.[0].name == 'Testowa trasa 1')]").exists())
                 .andExpect(jsonPath("$.[0].user").isNotEmpty())
                 .andExpect(jsonPath("$.[0].points").isNotEmpty())
-                .andExpect(jsonPath("$.[0].photoElementPoints").isEmpty())
-                .andExpect(jsonPath("$.[0].textElementPoints").isEmpty())
+                .andExpect(jsonPath("$.[0].elements").isEmpty())
                 .andExpect(jsonPath("$.[1].id").isNotEmpty())
                 .andExpect(jsonPath("[?($.[1].name == 'Testowa trasa 2')]").exists())
                 .andExpect(jsonPath("$.[1].user").isNotEmpty())
                 .andExpect(jsonPath("$.[1].points").isNotEmpty())
-                .andExpect(jsonPath("$.[1].photoElementPoints").isEmpty())
-                .andExpect(jsonPath("$.[1].textElementPoints").isEmpty())
+                .andExpect(jsonPath("$.[1].elements").isEmpty())
                 .andReturn().getResponse().getContentAsString()
         ;
 
