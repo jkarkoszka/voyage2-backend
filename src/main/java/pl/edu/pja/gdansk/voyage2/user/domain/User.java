@@ -6,9 +6,11 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.edu.pja.gdansk.voyage2.attachment.domain.Attachment;
+import pl.edu.pja.gdansk.voyage2.route.domain.Route;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Document
@@ -29,9 +31,18 @@ public class User {
     private boolean isActive = false;
     @JsonIgnore
     private String activationToken;
+    private List<Route> favoriteRoutes = new ArrayList<>();
 
     public String getId() {
         return id;
+    }
+
+    public List<Route> getFavoriteRoutes() {
+        return favoriteRoutes;
+    }
+
+    public void addRouteToFavoriteRoutes(Route route) {
+        this.favoriteRoutes.add(route);
     }
 
     public String getUsername() {

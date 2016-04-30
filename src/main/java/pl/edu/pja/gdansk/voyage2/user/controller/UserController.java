@@ -6,13 +6,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
+import pl.edu.pja.gdansk.voyage2.user.request.AddToFavoriteRouteRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ChangePasswordRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ResetPasswordRequest;
-import pl.edu.pja.gdansk.voyage2.user.service.ActivateUser;
-import pl.edu.pja.gdansk.voyage2.user.service.ChangePassword;
-import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
-import pl.edu.pja.gdansk.voyage2.user.service.ResetPassword;
+import pl.edu.pja.gdansk.voyage2.user.service.*;
 
 import javax.validation.Valid;
 
@@ -27,6 +25,8 @@ public class UserController {
     private ActivateUser activateUser;
     @Autowired
     private ChangePassword changePassword;
+    @Autowired
+    private AddToFavoriteRoute addToFavoriteRoute;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,5 +53,12 @@ public class UserController {
                                @PathVariable String userId,
                                @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         changePassword.change(changePasswordRequest, principal, userId);
+    }
+
+    @RequestMapping(value = "/user/favorite-routes", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void addToFavoriteRoute(@Valid @RequestBody AddToFavoriteRouteRequest addToFavoriteRouteRequest,
+                                   @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        addToFavoriteRoute.add(addToFavoriteRouteRequest, principal);
     }
 }

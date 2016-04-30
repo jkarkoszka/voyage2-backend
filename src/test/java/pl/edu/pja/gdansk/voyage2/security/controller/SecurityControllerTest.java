@@ -12,8 +12,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
+import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
+import pl.edu.pja.gdansk.voyage2.user.service.ActivateUser;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -30,6 +32,8 @@ public class SecurityControllerTest extends BaseControllerTest {
     private UserRepository userRepository;
     @Autowired
     private RegisterUser registerUser;
+    @Autowired
+    private ActivateUser activateUser;
 
     @Before
     public void setUp() {
@@ -44,7 +48,8 @@ public class SecurityControllerTest extends BaseControllerTest {
         request.setEmail("test@example.com");
         request.setPassword("aaa");
         request.setPublic(true);
-        registerUser.createUser(request);
+        User user = registerUser.createUser(request);
+        activateUser.activate(user.getActivationToken());
 
         //when//then
         this.mockMvc

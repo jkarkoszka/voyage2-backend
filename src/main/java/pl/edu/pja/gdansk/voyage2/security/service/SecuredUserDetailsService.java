@@ -18,7 +18,7 @@ public class SecuredUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsernameAndPasswordStatusNot(username, PasswordStatus.EXPIRED);
+        User user = userRepository.findByUsernameAndPasswordStatusNotAndIsActive(username, PasswordStatus.EXPIRED, true);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

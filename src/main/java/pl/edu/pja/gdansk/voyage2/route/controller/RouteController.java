@@ -11,10 +11,8 @@ import pl.edu.pja.gdansk.voyage2.route.exception.RouteIdsNotMatchException;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteNotFoundException;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
 import pl.edu.pja.gdansk.voyage2.route.request.EditRouteRequest;
-import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
-import pl.edu.pja.gdansk.voyage2.route.service.DeleteRoute;
-import pl.edu.pja.gdansk.voyage2.route.service.EditRoute;
-import pl.edu.pja.gdansk.voyage2.route.service.RouteFetcher;
+import pl.edu.pja.gdansk.voyage2.route.request.ShareRouteRequest;
+import pl.edu.pja.gdansk.voyage2.route.service.*;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 
 import javax.validation.Valid;
@@ -31,6 +29,8 @@ public class RouteController {
     private DeleteRoute deleteRoute;
     @Autowired
     private RouteFetcher routeFetcher;
+    @Autowired
+    private ShareRoute shareRoute;
 
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,6 +60,15 @@ public class RouteController {
         return routeFetcher.findOneById(id);
     }
 
+    @RequestMapping(value = "/route/{id}/users", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void shareRoute(
+            @PathVariable String id,
+            @Valid @RequestBody ShareRouteRequest shareRouteRequest,
+            @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        shareRoute.share(id, principal, shareRouteRequest);
+    }
+
     @RequestMapping(value = "/routes/by-area", method = RequestMethod.GET)
     public List<Route> listRoutesByArea(
             @RequestParam(name = "x1") double x1,
@@ -69,13 +78,15 @@ public class RouteController {
             @RequestParam(name = "x3") double x3,
             @RequestParam(name = "y3") double y3,
             @RequestParam(name = "x4") double x4,
-            @RequestParam(name = "y4") double y4
+            @RequestParam(name = "y4") double y4,
+            @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
     ) {
         return routeFetcher.findByArea(
                 new Point(x1, y1),
                 new Point(x2, y2),
                 new Point(x3, y3),
-                new Point(x4, y4)
+                new Point(x4, y4),
+                principal
         );
     }
 }
