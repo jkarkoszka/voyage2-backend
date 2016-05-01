@@ -71,21 +71,22 @@ public class RouteController {
 
     @RequestMapping(value = "/routes/by-area", method = RequestMethod.GET)
     public List<Route> listRoutesByArea(
-            @RequestParam(name = "x1") double x1,
-            @RequestParam(name = "y1") double y1,
-            @RequestParam(name = "x2") double x2,
-            @RequestParam(name = "y2") double y2,
-            @RequestParam(name = "x3") double x3,
-            @RequestParam(name = "y3") double y3,
-            @RequestParam(name = "x4") double x4,
-            @RequestParam(name = "y4") double y4,
+            @RequestParam(name = "tlX") double tlX,
+            @RequestParam(name = "tlY") double tlY,
+            @RequestParam(name = "blX") double blX,
+            @RequestParam(name = "blY") double blY,
+            @RequestParam(name = "brX") double brX,
+            @RequestParam(name = "brY") double brY,
+            @RequestParam(name = "trX") double trX,
+            @RequestParam(name = "trY") double trY,
             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
     ) {
+        double distance = 1.0D;
         return routeFetcher.findByArea(
-                new Point(x1, y1),
-                new Point(x2, y2),
-                new Point(x3, y3),
-                new Point(x4, y4),
+                new Point(tlX - distance, tlY + distance),
+                new Point(blX - distance, blY - distance),
+                new Point(brX + distance, brY - distance),
+                new Point(trX + distance, trY + distance),
                 principal
         );
     }

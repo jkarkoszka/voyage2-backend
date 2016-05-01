@@ -25,17 +25,17 @@ public class RouteFetcher {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Route> findByArea(Point point1, Point point2, Point point3, Point point4, SecuredUserDetails principal) {
+    public List<Route> findByArea(Point topLeft, Point bottomLeft, Point bottomRight, Point topRight, SecuredUserDetails principal) {
         User user = userRepository.findByUsername(principal.getUsername());
         if (Objects.isNull(user)) {
             throw new UserNotFoundException("User is not found by username = '" + principal.getUsername() + "'");
         }
         List<Point> points = Arrays.asList(
-                point1,
-                point2,
-                point3,
-                point4,
-                point1
+                topLeft,
+                bottomLeft,
+                bottomRight,
+                topRight,
+                topLeft
         );
         List<Route> routes = routeRepository.findByPointsWithin(
                 new GeoJsonPolygon(points)

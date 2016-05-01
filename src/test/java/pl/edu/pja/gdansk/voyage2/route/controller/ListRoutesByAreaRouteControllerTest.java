@@ -88,14 +88,14 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
         String response = this.mockMvc
                 .perform(
                         get("/routes/by-area")
-                                .param("x1", "0")
-                                .param("y1", "0")
-                                .param("x2", "4")
-                                .param("y2", "0")
-                                .param("x3", "4")
-                                .param("y3", "1")
-                                .param("x4", "0")
-                                .param("y4", "1")
+                                .param("blX", "0")
+                                .param("blY", "0")
+                                .param("brX", "4")
+                                .param("brY", "0")
+                                .param("trX", "4")
+                                .param("trY", "1")
+                                .param("tlX", "0")
+                                .param("tlY", "1")
                                 .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
@@ -112,6 +112,50 @@ public class ListRoutesByAreaRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.[1].elements").isEmpty())
                 .andReturn().getResponse().getContentAsString()
         ;
+
+        System.out.println(response);
+    }
+
+    @Test
+    public void routeListByArea2() throws Exception {
+        //given
+        AddRouteRequest addRouteRequest1 = new AddRouteRequest(
+                "Testowa trasa 1",
+                "Opis trasy",
+                100,
+                123125345,
+                223423423,
+                Arrays.asList(new Point(18.5D, 54.5D), new Point(18.51, 54.5D), new Point(18.51, 54.5D)),
+                Arrays.asList(),
+                Arrays.asList()
+        );
+        Route route1 = addRoute.add(activatedUser, addRouteRequest1);
+
+        assertThat(routeRepository.findAll()).hasSize(1);
+
+        //when//then
+        String response = this.mockMvc
+                .perform(
+                        get("/routes/by-area")
+                                .param("blX", "18.0")
+                                .param("blY", "54.0")
+                                .param("tlX", "18.0")
+                                .param("tlY", "55.0")
+                                .param("trX", "19.0")
+                                .param("trY", "55.0")
+                                .param("brX", "19.0")
+                                .param("brY", "54.0")
+                                .with(httpBasic("test", "aaa"))
+                                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id").isNotEmpty())
+                .andExpect(jsonPath("[?($.[0].name == 'Testowa trasa 1')]").exists())
+                .andExpect(jsonPath("$.[0].user").isNotEmpty())
+                .andExpect(jsonPath("$.[0].points").isNotEmpty())
+                .andExpect(jsonPath("$.[0].elements").isEmpty())
+                .andReturn().getResponse().getContentAsString()
+                ;
 
         System.out.println(response);
     }
