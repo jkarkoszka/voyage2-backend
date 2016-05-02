@@ -63,4 +63,20 @@ public class RouteFetcher {
         }
         return route;
     }
+
+    public List<Route> findMyRoutes(SecuredUserDetails principal) {
+        User user = userRepository.findByUsername(principal.getUsername());
+        if (Objects.isNull(user)) {
+            throw new UserNotFoundException("User is not found by username = '" + principal.getUsername() + "'");
+        }
+        return routeRepository.findByUser(user);
+    }
+
+    public List<Route> findMyFavoriteRoutes(SecuredUserDetails principal) {
+        User user = userRepository.findByUsername(principal.getUsername());
+        if (Objects.isNull(user)) {
+            throw new UserNotFoundException("User is not found by username = '" + principal.getUsername() + "'");
+        }
+        return user.getFavoriteRoutes();
+    }
 }

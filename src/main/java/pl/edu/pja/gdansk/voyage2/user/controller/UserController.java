@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pja.gdansk.voyage2.route.domain.Route;
+import pl.edu.pja.gdansk.voyage2.route.service.RouteFetcher;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.request.AddToFavoriteRouteRequest;
@@ -13,6 +15,7 @@ import pl.edu.pja.gdansk.voyage2.user.request.ResetPasswordRequest;
 import pl.edu.pja.gdansk.voyage2.user.service.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -27,6 +30,8 @@ public class UserController {
     private ChangePassword changePassword;
     @Autowired
     private AddToFavoriteRoute addToFavoriteRoute;
+    @Autowired
+    private RouteFetcher routeFetcher;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,5 +65,17 @@ public class UserController {
     public void addToFavoriteRoute(@Valid @RequestBody AddToFavoriteRouteRequest addToFavoriteRouteRequest,
                                    @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         addToFavoriteRoute.add(addToFavoriteRouteRequest, principal);
+    }
+
+    @RequestMapping(value = "/user/favorite-routes", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Route> listFavoriteRoutes(@AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        return routeFetcher.findMyFavoriteRoutes(principal);
+    }
+
+    @RequestMapping(value = "/user/my-routes", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Route> listMyRoutes(@AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        return routeFetcher.findMyRoutes(principal);
     }
 }
