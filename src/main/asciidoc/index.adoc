@@ -165,7 +165,7 @@ include::{snippets}/route-get-by-id/http-request.adoc[]
 
 include::{snippets}/route-get-by-id/http-response.adoc[]
 
-[[resources-route-add]]
+[[resources-route-list-by-area]]
 ==== Pobieranie listy tras z obszaru
 
 ===== Przykładowe zapytanie
@@ -175,3 +175,14 @@ include::{snippets}/route-list-by-area/http-request.adoc[]
 ===== Przykładowa odpowiedź
 
 include::{snippets}/route-list-by-area/http-response.adoc[]
+
+[[resources-add-route-to-favorite-routes]]
+==== Dodawanie trasy do listy ulubionych tras użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/add-route-to-favorite-routes/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/add-route-to-favorite-routes/http-response.adoc[]
