@@ -1,6 +1,7 @@
 package pl.edu.pja.gdansk.voyage2.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -32,6 +33,7 @@ public class User {
     private boolean isActive = false;
     @JsonIgnore
     private String activationToken;
+    @JsonIgnore
     @DBRef
     private List<Route> favoriteRoutes = new ArrayList<>();
 
@@ -45,6 +47,10 @@ public class User {
 
     public void addRouteToFavoriteRoutes(Route route) {
         this.favoriteRoutes.add(route);
+    }
+
+    public void removeRouteFromFavoriteRoutes(Route route) {
+        this.favoriteRoutes.remove(route);
     }
 
     public String getUsername() {

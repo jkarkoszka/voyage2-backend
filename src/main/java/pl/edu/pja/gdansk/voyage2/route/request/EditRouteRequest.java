@@ -27,6 +27,8 @@ public class EditRouteRequest {
     private List<PhotoElementRequest> photoElements;
     @NotNull
     private List<TextElementRequest> textElements;
+    private String folderId;
+
 
     public EditRouteRequest(
             @JsonProperty("id") String id,
@@ -37,7 +39,8 @@ public class EditRouteRequest {
             @JsonProperty("finishedAt") Integer finishedAt,
             @JsonProperty("points") List<Point> points,
             @JsonProperty("photoElements") List<PhotoElementRequest> photoElements,
-            @JsonProperty("textElements") List<TextElementRequest> textElements) {
+            @JsonProperty("textElements") List<TextElementRequest> textElements,
+            @JsonProperty("folderId") String folderId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -47,6 +50,7 @@ public class EditRouteRequest {
         this.points = points;
         this.photoElements = photoElements;
         this.textElements = textElements;
+        this.folderId = folderId;
     }
 
     public String getId() {
@@ -83,5 +87,9 @@ public class EditRouteRequest {
 
     public Integer getFinishedAt() {
         return finishedAt;
+    }
+
+    public String getFolderId() {
+        return folderId;
     }
 }

@@ -84,6 +84,45 @@ Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów bł�
 | `1`
 | Element już istnieje w bazie danych
 
+| `2`
+| Trasa nie znaleziona w bazie danych
+
+| `3`
+| Parametr routeId z URL Path nie pasuje do routeId z request body
+
+| `4`
+| Brak dostępu do trasy
+
+| `5`
+| Użytkownik nie znaleziony
+
+| `6`
+| Nie powiodło się wysłanie linku aktywacyjnego
+
+| `7`
+| Nie powiodło się wysłanie nowego hasła
+
+| `8`
+| Nie powiódł się upload pliku na serwer
+
+| `9`
+| Nie powiodło się wysłanie e-maila
+
+| `10`
+| E-mail już jest używany
+
+| `11`
+| Nazwa użytkownika jest już zajęta
+
+| `12`
+| Nazwa folderu jest już zajęta
+
+| `13`
+| Trasa nie jest w twoim folderze
+
+| `14`
+| Folder nie istnieje
+
 |===
 
 [[resources]]
@@ -176,8 +215,22 @@ include::{snippets}/route-list-by-area/http-request.adoc[]
 
 include::{snippets}/route-list-by-area/http-response.adoc[]
 
-[[resources-add-route-to-favorite-routes]]
-==== Dodawanie trasy do listy ulubionych tras użytkownika
+[[resources-route-favorite]]
+=== Foldery - ulubione trasy
+
+[[resources-list-favorite-routes]]
+==== Pobieranie listy ulubionych tras
+
+===== Przykładowe zapytanie
+
+include::{snippets}/favorite-routes-list/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/favorite-routes-list/http-response.adoc[]
+
+[[resources-folder-add-route-to-favorite-routes]]
+==== Dodawanie trasy do ulubionych
 
 ===== Przykładowe zapytanie
 
@@ -186,3 +239,61 @@ include::{snippets}/add-route-to-favorite-routes/http-request.adoc[]
 ===== Przykładowa odpowiedź
 
 include::{snippets}/add-route-to-favorite-routes/http-response.adoc[]
+
+[[resources-folder-remove-route-from-favorite-routes]]
+==== Usuwanie trasy z ulubionych
+
+===== Przykładowe zapytanie
+
+include::{snippets}/remove-route-from-favorite-routes/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/remove-route-from-favorite-routes/http-response.adoc[]
+
+[[resources-folder]]
+=== Foldery - moje trasy
+
+[[resources-list-my-routes]]
+==== Pobieranie listy moich tras
+
+===== Przykładowe zapytanie
+
+include::{snippets}/my-routes-list/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/my-routes-list/http-response.adoc[]
+
+[[resources-folder-add-my-routes]]
+==== Dodawanie folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/my-routes-folder-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/my-routes-folder-add/http-response.adoc[]
+
+[[resources-folder-remove-my-routes]]
+==== Usuwanie folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/my-routes-folder-remove/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/my-routes-folder-remove/http-response.adoc[]
+
+[[resources-folder-list-my-routes]]
+==== Pobieranie listy folderów
+
+===== Przykładowe zapytanie
+
+include::{snippets}/my-routes-folder-list/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/my-routes-folder-list/http-response.adoc[]

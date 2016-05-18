@@ -1,4 +1,4 @@
-package pl.edu.pja.gdansk.voyage2.user.controller;
+package pl.edu.pja.gdansk.voyage2.folder.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,65 +12,54 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.route.domain.Route;
+import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
 import pl.edu.pja.gdansk.voyage2.route.request.PhotoElementRequest;
 import pl.edu.pja.gdansk.voyage2.route.request.TextElementRequest;
-import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
-import pl.edu.pja.gdansk.voyage2.user.request.AddToFavoriteRouteRequest;
 
 import java.util.Arrays;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class AddRouteToFavoriteRoutesControllerTest extends BaseControllerTest {
+public class AddFolderControllerTest extends BaseControllerTest {
 
     @Autowired
-    private RouteRepository routeRepository;
-    @Autowired
-    private AddRoute addRoute;
+    private FolderRepository folderRepository;
 
     @Before
     public void setUp() {
-        routeRepository.deleteAll();
+        folderRepository.deleteAll();
     }
 
     @Test
-    public void addRouteToFavoriteRoutes() throws Exception {
+    public void myRoutesFolderAdd() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest(
-                "Testowa trasa",
-                "Opis trasy",
-                100,
-                123125345,
-                223423423,
-                Arrays.asList(new Point(1, 0), new Point(5, 6), new Point(9, 9), new Point(16, 2)),
-                Arrays.asList(new PhotoElementRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementRequest("bca", "opis zdjecia 2", new Point(9, 9))),
-                Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2)))
-        );
-        Route route = addRoute.add(activatedUser, addRouteRequest);
-
-        AddToFavoriteRouteRequest addToFavoriteRouteRequest = new AddToFavoriteRouteRequest();
-        addToFavoriteRouteRequest.setRouteId(route.getId());
+        AddFolderRequest request = new AddFolderRequest(
+                "folder1"
+           );
 
         //when//then
         this.mockMvc
                 .perform(
-                        post("/user/favorite-routes")
+                        post("/user/my-routes/folders")
                                 .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(
-                                        this.objectMapper.writeValueAsString(addToFavoriteRouteRequest)
+                                        this.objectMapper.writeValueAsString(request)
                                 )
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("[?($.name == 'folder1')]").exists())
         ;
     }
 }

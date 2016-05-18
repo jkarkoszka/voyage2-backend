@@ -54,7 +54,8 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 223423423,
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
                 Arrays.asList(),
-                Arrays.asList()
+                Arrays.asList(),
+                null
         );
         Route route = addRoute.add(activatedUser, addRouteRequest);
         EditRouteRequest request = new EditRouteRequest(
@@ -66,7 +67,8 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
                 223422423,
                 Arrays.asList(new Point(0, 1), new Point(6,5), new Point(12,56), new Point(2, 25)),
                 Arrays.asList(),
-                Arrays.asList()
+                Arrays.asList(),
+                null
         );
 
         //when//then

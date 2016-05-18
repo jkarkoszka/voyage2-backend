@@ -13,5 +13,8 @@ public class RestErrorCode {
     public static final int SENDING_EMAIL_FAILED = 9;
     public static final int EMAIL_IS_ALREADY_USED = 10;
     public static final int USERNAME_IS_ALREADY_USED = 11;
+    public static final int FOLDER_NAME_IS_ALREADY_USED = 12;
+    public static final int ROUTE_IS_NOT_IN_YOUR_FOLDER = 13;
+    public static final int FOLDER_NOT_FOUND = 14;
 
 }

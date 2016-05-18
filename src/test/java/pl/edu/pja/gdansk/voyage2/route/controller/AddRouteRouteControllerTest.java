@@ -13,6 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
+import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
+import pl.edu.pja.gdansk.voyage2.folder.service.AddFolder;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
 import pl.edu.pja.gdansk.voyage2.route.request.PhotoElementRequest;
@@ -33,6 +36,8 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
 
     @Autowired
     private RouteRepository routeRepository;
+    @Autowired
+    private AddFolder addFolder;
 
     @Before
     public void setUp() {
@@ -42,6 +47,9 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
     @Test
     public void routeAdd() throws Exception {
         //given
+        AddFolderRequest addFolderRequest = new AddFolderRequest("test_folder");
+        Folder folder = addFolder.add(addFolderRequest, activatedUser);
+
         AddRouteRequest request = new AddRouteRequest(
                 "Testowa trasa",
                 "Opis trasy",
@@ -50,7 +58,8 @@ public class AddRouteRouteControllerTest extends BaseControllerTest {
                 223423423,
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
                 Arrays.asList(new PhotoElementRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementRequest("bca", "opis zdjecia 2", new Point(9, 9))),
-                Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2)))
+                Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2))),
+                folder.getId()
         );
 
         //when//then

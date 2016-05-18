@@ -1,12 +1,15 @@
 package pl.edu.pja.gdansk.voyage2.route.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonLineString;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 
 import java.util.List;
+import java.util.Objects;
 
 @Document
 public class Route {
@@ -21,6 +24,7 @@ public class Route {
     private GeoJsonLineString points;
     @DBRef
     private User user;
+    private Folder folder;
     private List<Element> elements;
 
     public String getId() {
@@ -49,6 +53,14 @@ public class Route {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
     public List<Element> getElements() {
@@ -89,5 +101,18 @@ public class Route {
 
     public void setFinishedAt(Integer finishedAt) {
         this.finishedAt = finishedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(id, route.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

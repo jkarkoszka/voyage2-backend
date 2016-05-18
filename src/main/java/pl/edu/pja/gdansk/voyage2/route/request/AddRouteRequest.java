@@ -25,6 +25,7 @@ public class AddRouteRequest {
     private List<PhotoElementRequest> photoElements;
     @NotNull
     private List<TextElementRequest> textElements;
+    private String folderId;
 
     @JsonCreator
     public AddRouteRequest(
@@ -35,7 +36,8 @@ public class AddRouteRequest {
             @JsonProperty("finishedAt") Integer finishedAt,
             @JsonProperty("points") List<Point> points,
             @JsonProperty("photoElements") List<PhotoElementRequest> photoElements,
-            @JsonProperty("textElements") List<TextElementRequest> textElements) {
+            @JsonProperty("textElements") List<TextElementRequest> textElements,
+            @JsonProperty("folderId") String folderId) {
         this.name = name;
         this.description = description;
         this.distance = distance;
@@ -44,6 +46,7 @@ public class AddRouteRequest {
         this.points = points;
         this.photoElements = photoElements;
         this.textElements = textElements;
+        this.folderId = folderId;
     }
 
     public String getName() {
@@ -76,5 +79,9 @@ public class AddRouteRequest {
 
     public Integer getFinishedAt() {
         return finishedAt;
+    }
+
+    public String getFolderId() {
+        return folderId;
     }
 }
