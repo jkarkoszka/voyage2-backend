@@ -60,6 +60,6 @@ public class BaseControllerTest {
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("aaa");
         registerUserRequest.setPublic(true);
-        return registerUser.createUser(registerUserRequest);
+        return registerUser.register(registerUserRequest);
     }
 }

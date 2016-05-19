@@ -12,7 +12,7 @@ import pl.edu.pja.gdansk.voyage2.folder.exception.FolderNotFoundException;
 import pl.edu.pja.gdansk.voyage2.folder.exception.RouteIsNotInYourFolderException;
 
 @ControllerAdvice
-public class FolderErrorController {
+public class MyRouteFolderErrorController {
 
     @ExceptionHandler(FolderNameAlreadyUsedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

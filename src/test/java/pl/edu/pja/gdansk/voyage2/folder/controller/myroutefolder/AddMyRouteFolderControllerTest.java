@@ -1,26 +1,21 @@
-package pl.edu.pja.gdansk.voyage2.route.controller;
+package pl.edu.pja.gdansk.voyage2.folder.controller.myroutefolder;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.geo.Point;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.route.domain.Route;
-import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
-import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
-import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
+import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
 
-import java.util.Arrays;
-
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,43 +24,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class DeleteRouteByIdRouteControllerTest extends BaseControllerTest {
+public class AddMyRouteFolderControllerTest extends BaseControllerTest {
 
     @Autowired
-    private RouteRepository routeRepository;
-
-    @Autowired
-    private AddRoute addRoute;
+    private FolderRepository folderRepository;
 
     @Before
     public void setUp() {
-        routeRepository.deleteAll();
+        folderRepository.deleteAll();
     }
 
     @Test
-    public void routeDelete() throws Exception {
+    public void add() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest(
-                "Testowa trasa",
-                "Opis trasy",
-                100,
-                123125345,
-                223423423,
-                Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
-                Arrays.asList(),
-                Arrays.asList(),
-                null
+        AddFolderRequest request = new AddFolderRequest(
+                "folder1"
         );
-        Route route = addRoute.add(activatedUser, addRouteRequest);
-
         //when//then
         this.mockMvc
                 .perform(
-                        delete("/route/{id}", route.getId())
+                        post("/user/my-routes/folders")
                                 .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .content(
+                                        this.objectMapper.writeValueAsString(request)
+                                )
                 )
-                .andExpect(status().isNoContent())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("[?($.name == 'folder1')]").exists())
+                .andDo(document("folder-myroutefolder-add"))
         ;
     }
 }

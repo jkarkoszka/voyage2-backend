@@ -34,13 +34,13 @@ public class RouteController {
 
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Route addRoute(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    public Route add(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         return addRoute.add(principal, addRouteRequest);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public Route editRoute(
+    public Route edit(
             @PathVariable String id,
             @Valid @RequestBody EditRouteRequest editRouteRequest,
             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
@@ -50,19 +50,19 @@ public class RouteController {
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRoute(@PathVariable String id, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) throws RouteNotFoundException, RouteAccessDeniedException {
+    public void delete(@PathVariable String id, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) throws RouteNotFoundException, RouteAccessDeniedException {
         deleteRoute.delete(principal, id);
     }
 
     @RequestMapping(value = "/route/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Route getRouteById(@PathVariable String id) throws RouteNotFoundException {
+    public Route findOne(@PathVariable String id) throws RouteNotFoundException {
         return routeFetcher.findOneById(id);
     }
 
     @RequestMapping(value = "/route/{id}/users", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void shareRoute(
+    public void share(
             @PathVariable String id,
             @Valid @RequestBody ShareRouteRequest shareRouteRequest,
             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
@@ -70,7 +70,7 @@ public class RouteController {
     }
 
     @RequestMapping(value = "/routes/by-area", method = RequestMethod.GET)
-    public List<Route> listRoutesByArea(
+    public List<Route> findByArea(
             @RequestParam(name = "tlX") double tlX,
             @RequestParam(name = "tlY") double tlY,
             @RequestParam(name = "blX") double blX,

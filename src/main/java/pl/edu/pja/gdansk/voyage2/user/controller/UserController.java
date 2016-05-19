@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public User register(@Valid @RequestBody RegisterUserRequest registerUserRequest) {
-        return registerUser.createUser(registerUserRequest);
+        return registerUser.register(registerUserRequest);
     }
 
     @RequestMapping(value = "/user/activationToken/{activationToken}", method = RequestMethod.GET)

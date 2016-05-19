@@ -145,20 +145,92 @@ include::{snippets}/user-register/http-request.adoc[]
 
 include::{snippets}/user-register/http-response.adoc[]
 
-[[resources-user-login]]
+[[resources-security-login]]
 
 ==== Autoryzacja użytkownika
 
 Autoryzacja odbywa się za pomocą metody HTTP Basic. Nazwa użytkownika i hasło jest przekazywana w nagłówku 'Authorization', a jego wartość jest zapisana w kodowaniu Base64.
-W odpowiedzi dostajemy token, który jest później wykorzystywany do wykonywania zapytań do API w kontekście zalogowanego użytkownika.
+W odpowiedzi dostajemy token, który jest później wykorzystywany do wykonywania zapytań do API w kontekście zalogowanego użytkownika. Token przekazujemy w nagłówku o nazwie: "x-auth-token".
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/user-token-create/http-request.adoc[]
+include::{snippets}/security-login/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/user-token-create/http-response.adoc[]
+include::{snippets}/security-login/http-response.adoc[]
+
+[[resources-security-logout]]
+
+==== Wylogowanie użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/security-logout/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/security-logout/http-response.adoc[]
+
+[[resources-user-activate]]
+
+==== Aktywacja użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-activate/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-activate/http-response.adoc[]
+
+[[resources-user-change-avatar]]
+
+==== Zmiana avatara użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-avatar/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-avatar/http-response.adoc[]
+
+[[resources-user-delete-avatar]]
+
+==== Usunięcie avatara użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-delete-avatar/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-delete-avatar/http-response.adoc[]
+
+[[resources-user-reset-password]]
+
+==== Reset hasła użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-reset-password/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-reset-password/http-response.adoc[]
+
+[[resources-user-change-password]]
+
+==== Zmiana hasła użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-password/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-password/http-response.adoc[]
 
 [[resources-route]]
 === Trasy
@@ -196,107 +268,124 @@ include::{snippets}/route-delete/http-request.adoc[]
 
 include::{snippets}/route-delete/http-response.adoc[]
 
-[[resources-route-get-by-id]]
+[[resources-route-fine-one]]
 ==== Pobieranie wybranej trasy
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/route-get-by-id/http-request.adoc[]
+include::{snippets}/route-find-one/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/route-get-by-id/http-response.adoc[]
+include::{snippets}/route-find-one/http-response.adoc[]
 
-[[resources-route-list-by-area]]
+[[resources-route-find-by-area]]
 ==== Pobieranie listy tras z obszaru
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/route-list-by-area/http-request.adoc[]
+include::{snippets}/route-find-by-area/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/route-list-by-area/http-response.adoc[]
+include::{snippets}/route-find-by-area/http-response.adoc[]
 
-[[resources-route-favorite]]
-=== Foldery - ulubione trasy
+[[resources-folder-favoriteroute]]
+=== Foldery - ulubione
 
-[[resources-list-favorite-routes]]
-==== Pobieranie listy ulubionych tras
-
-===== Przykładowe zapytanie
-
-include::{snippets}/favorite-routes-list/http-request.adoc[]
-
-===== Przykładowa odpowiedź
-
-include::{snippets}/favorite-routes-list/http-response.adoc[]
-
-[[resources-folder-add-route-to-favorite-routes]]
+[[resources-folder-favoriteroute-add]]
 ==== Dodawanie trasy do ulubionych
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/add-route-to-favorite-routes/http-request.adoc[]
+include::{snippets}/folder-favoriteroute-add/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/add-route-to-favorite-routes/http-response.adoc[]
+include::{snippets}/folder-favoriteroute-add/http-response.adoc[]
 
-[[resources-folder-remove-route-from-favorite-routes]]
+[[resources-folder-favoriteroute-delete]]
 ==== Usuwanie trasy z ulubionych
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/remove-route-from-favorite-routes/http-request.adoc[]
+include::{snippets}/folder-favoriteroute-remove/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/remove-route-from-favorite-routes/http-response.adoc[]
+include::{snippets}/folder-favoriteroute-remove/http-response.adoc[]
 
-[[resources-folder]]
+[[resources-folder-favoriteroute-find]]
+==== Pobieranie listy ulubionych tras
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-favoriteroute-find/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-favoriteroute-find/http-response.adoc[]
+
+[[resources-folder-myroute]]
 === Foldery - moje trasy
 
-[[resources-list-my-routes]]
+[[resources-folder-myroute-find]]
 ==== Pobieranie listy moich tras
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/my-routes-list/http-request.adoc[]
+include::{snippets}/folder-myroute-find/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/my-routes-list/http-response.adoc[]
+include::{snippets}/folder-myroute-find/http-response.adoc[]
 
-[[resources-folder-add-my-routes]]
+[[resources-folder-myroutefolder-add]]
 ==== Dodawanie folderu
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/my-routes-folder-add/http-request.adoc[]
+include::{snippets}/folder-myroutefolder-add/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/my-routes-folder-add/http-response.adoc[]
+include::{snippets}/folder-myroutefolder-add/http-response.adoc[]
 
-[[resources-folder-remove-my-routes]]
+[[resources-folder-myroutefolder-delete]]
 ==== Usuwanie folderu
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/my-routes-folder-remove/http-request.adoc[]
+include::{snippets}/folder-myroutefolder-delete/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/my-routes-folder-remove/http-response.adoc[]
+include::{snippets}/folder-myroutefolder-delete/http-response.adoc[]
 
-[[resources-folder-list-my-routes]]
+[[resources-folder-myroutefolder-find]]
 ==== Pobieranie listy folderów
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/my-routes-folder-list/http-request.adoc[]
+include::{snippets}/folder-myroutefolder-find/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/my-routes-folder-list/http-response.adoc[]
+include::{snippets}/folder-myroutefolder-find/http-response.adoc[]
+
+[[resources-attachment]]
+=== Załączniki
+
+[[resources-attachment-add]]
+
+==== Tworzenie załącznika
+
+Załączniki to po prostu pliki wgrane na serwer przez użytkownika. Każdy z wgranych plików otrzymuje identyfikator - id / attachmentId. Ta wartość może być użyta w requeście tworzącym trasę (do dołączania zdjęć) lub w requeście zmieniających avatara użytkownika.
+
+===== Przykładowe zapytanie
+
+include::{snippets}/attachment-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/attachment-add/http-response.adoc[]

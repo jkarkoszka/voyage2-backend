@@ -1,24 +1,18 @@
-package pl.edu.pja.gdansk.voyage2.user.controller;
+package pl.edu.pja.gdansk.voyage2.security.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.attachment.domain.Attachment;
-import pl.edu.pja.gdansk.voyage2.attachment.repository.AttachmentRepository;
-import pl.edu.pja.gdansk.voyage2.user.domain.User;
-import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeAvatarRequest;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,19 +20,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class DeleteAvatarUserControllerTest extends BaseControllerTest {
+public class LogoutSecurityControllerTest extends BaseControllerTest {
 
     @Test
-    public void deleteAvatar() throws Exception {
+    public void logout() throws Exception {
         //when//then
         this.mockMvc
                 .perform(
-                        delete("/user/avatar")
+                        delete("/user/token").contentType(MediaType.APPLICATION_JSON_UTF8)
+                                .header("x-auth-token", "0dc1f6e1-c7f1-41ac-8ce2-32b6b3e57aa3")
                                 .with(httpBasic("test", "aaa"))
-                                .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
-                .andExpect(status().isNoContent())
-                .andDo(document("user-delete-avatar"))
+                .andExpect(status().is(HttpStatus.NO_CONTENT.value()))
+                .andDo(document("security-logout"))
         ;
     }
 }

@@ -17,7 +17,7 @@ public class AttachmentController {
 
     @RequestMapping(value = "/attachments", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Attachment addAttachment(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    public Attachment add(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         return addAttachment.add(principal, multipartFile);
     }
 }

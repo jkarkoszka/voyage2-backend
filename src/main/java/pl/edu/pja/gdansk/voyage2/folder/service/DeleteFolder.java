@@ -13,14 +13,14 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import java.util.Objects;
 
 @Component
-public class RemoveFolder {
+public class DeleteFolder {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private FolderRepository folderRepository;
 
-    public void remove(String folderId, SecuredUserDetails securedUserDetails) {
+    public void delete(String folderId, SecuredUserDetails securedUserDetails) {
         User user = userRepository.findByUsername(securedUserDetails.getUsername());
         Folder folder = folderRepository.findByIdAndUser(folderId, user);
         if (Objects.isNull(folder)) {

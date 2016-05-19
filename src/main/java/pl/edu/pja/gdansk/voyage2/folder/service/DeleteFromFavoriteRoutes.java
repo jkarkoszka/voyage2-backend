@@ -15,7 +15,7 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import java.util.Objects;
 
 @Component
-public class RemoveFromFavoriteRoutes {
+public class DeleteFromFavoriteRoutes {
 
     @Autowired
     private UserRepository userRepository;

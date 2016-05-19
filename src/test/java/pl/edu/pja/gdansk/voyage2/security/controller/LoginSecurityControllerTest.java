@@ -18,6 +18,7 @@ import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.service.ActivateUser;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class SecurityControllerTest extends BaseControllerTest {
+public class LoginSecurityControllerTest extends BaseControllerTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -41,16 +42,15 @@ public class SecurityControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void userTokenCreate() throws Exception {
+    public void login() throws Exception {
         //given
         RegisterUserRequest request = new RegisterUserRequest();
         request.setUsername("test");
         request.setEmail("test@example.com");
         request.setPassword("aaa");
         request.setPublic(true);
-        User user = registerUser.createUser(request);
+        User user = registerUser.register(request);
         activateUser.activate(user.getActivationToken());
-
         //when//then
         this.mockMvc
             .perform(
@@ -60,6 +60,7 @@ public class SecurityControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$.token").isNotEmpty())
             .andExpect(jsonPath("[?($.username == 'test')]").exists())
             .andExpect(jsonPath("[?($.passwordStatus == 'NORMAL')]").exists())
+            .andDo(document("security-login"))
         ;
     }
 }

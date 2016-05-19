@@ -18,6 +18,7 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.ChangeAvatarRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ChangePasswordRequest;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,16 +38,12 @@ public class ChangeAvatarUserControllerTest extends BaseControllerTest {
     public void changeAvatar() throws Exception {
         //given
         User user = userRepository.findByUsername(activatedUser.getUsername());
-
         Attachment attachment = new Attachment();
         attachment.setUser(user);
         attachment.setId("abc");
         attachment.setName("avatar.png");
-
         attachmentRepository.save(attachment);
-
         ChangeAvatarRequest request = new ChangeAvatarRequest(attachment.getId());
-
         //when//then
         this.mockMvc
                 .perform(
@@ -58,6 +55,7 @@ public class ChangeAvatarUserControllerTest extends BaseControllerTest {
                                 )
                 )
                 .andExpect(status().isNoContent())
+                .andDo(document("user-change-avatar"))
         ;
     }
 }

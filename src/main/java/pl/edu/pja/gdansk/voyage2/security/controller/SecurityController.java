@@ -21,7 +21,7 @@ public class SecurityController {
     @RequestMapping(value = "/user/token", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    UserTokenResponse createToken(HttpSession session, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    UserTokenResponse login(HttpSession session, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         User user = userRepository.findByUsername(principal.getUsername());
         UserTokenResponse userTokenResponse = new UserTokenResponse(user.getId(), session.getId(), user.getUsername(), user.getPasswordStatus(), user.getAuthorities());
         if (user.getPasswordStatus().equals(PasswordStatus.ONETIME)) {
@@ -33,7 +33,7 @@ public class SecurityController {
 
     @RequestMapping(value = "/user/token", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void invalidateToken(HttpSession session) {
+    public void logout(HttpSession session) {
         session.invalidate();
     }
 }

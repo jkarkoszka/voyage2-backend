@@ -1,4 +1,4 @@
-package pl.edu.pja.gdansk.voyage2.folder.controller;
+package pl.edu.pja.gdansk.voyage2.folder.controller.myroutefolder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,22 +12,20 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
-import pl.edu.pja.gdansk.voyage2.folder.domain.FolderType;
 import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
 import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
 import pl.edu.pja.gdansk.voyage2.folder.service.AddFolder;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class RemoveFolderFolderControllerTest extends BaseControllerTest {
+public class DeleteMyRouteFolderControllerTest extends BaseControllerTest {
 
     @Autowired
     private FolderRepository folderRepository;
@@ -40,13 +38,12 @@ public class RemoveFolderFolderControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void myRoutesFolderRemove() throws Exception {
+    public void remove() throws Exception {
         //given
         AddFolderRequest addFolderRequest = new AddFolderRequest(
                 "folder1"
         );
         Folder folder = addFolder.add(addFolderRequest, activatedUser);
-
         //when//then
         this.mockMvc
                 .perform(
@@ -55,6 +52,7 @@ public class RemoveFolderFolderControllerTest extends BaseControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(status().isNoContent())
+                .andDo(document("folder-myroutefolder-delete"))
         ;
     }
 }

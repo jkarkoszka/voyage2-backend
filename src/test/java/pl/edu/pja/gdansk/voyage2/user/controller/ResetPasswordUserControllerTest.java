@@ -15,6 +15,7 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ResetPasswordRequest;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,8 +28,10 @@ public class ResetPasswordUserControllerTest extends BaseControllerTest {
 
     @Test
     public void userResetPassword() throws Exception {
+        //given
         ResetPasswordRequest request = new ResetPasswordRequest();
         request.setEmail("test@example.com");
+        //when//then
         this.mockMvc
                 .perform(
                         post("/user/password")
@@ -38,6 +41,7 @@ public class ResetPasswordUserControllerTest extends BaseControllerTest {
                             )
                 )
                 .andExpect(status().isNoContent())
+                .andDo(document("user-reset-password"))
         ;
     }
 }

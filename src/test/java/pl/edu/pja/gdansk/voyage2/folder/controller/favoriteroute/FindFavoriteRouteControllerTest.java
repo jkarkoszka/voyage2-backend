@@ -1,4 +1,4 @@
-package pl.edu.pja.gdansk.voyage2.folder.controller;
+package pl.edu.pja.gdansk.voyage2.folder.controller.favoriteroute;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class ListFavoriteRoutesControllerTest extends BaseControllerTest {
+public class FindFavoriteRouteControllerTest extends BaseControllerTest {
 
     @Autowired
     private RouteRepository routeRepository;
@@ -55,56 +55,50 @@ public class ListFavoriteRoutesControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void favoriteRoutesList() throws Exception {
+    public void find() throws Exception {
         //given
         AddFolderRequest addFolderRequest1 = new AddFolderRequest("test_folder");
         Folder folder1 = addFolder.add(addFolderRequest1, activatedUser);
-
         AddFolderRequest addFolderRequest2 = new AddFolderRequest("another_folder");
         Folder folder2 = addFolder.add(addFolderRequest2, activatedUser);
-
         AddRouteRequest addRouteRequest1 = new AddRouteRequest(
                 "Testowa trasa 1",
                 "Opis trasy",
                 100,
                 123125345,
                 223423423,
-                Arrays.asList(new Point(0.5D, 0.5D), new Point(1,0.5D), new Point(2,0.5D), new Point(3, 0.5D)),
+                Arrays.asList(new Point(0.5D, 0.5D), new Point(1, 0.5D), new Point(2, 0.5D), new Point(3, 0.5D)),
                 Arrays.asList(),
                 Arrays.asList(),
                 folder1.getId()
         );
         Route route1 = addRoute.add(activatedUser, addRouteRequest1);
-
         AddRouteRequest addRouteRequest2 = new AddRouteRequest(
                 "Testowa trasa 2",
                 "Opis trasy",
                 100,
                 123125345,
                 223423423,
-                Arrays.asList(new Point(0.7D, 0.5D), new Point(1,0.7D), new Point(2,0.4D), new Point(3, 0.3D)),
+                Arrays.asList(new Point(0.7D, 0.5D), new Point(1, 0.7D), new Point(2, 0.4D), new Point(3, 0.3D)),
                 Arrays.asList(),
                 Arrays.asList(),
                 null
         );
         Route route2 = addRoute.add(activatedUser, addRouteRequest2);
-
         AddRouteRequest addRouteRequest3 = new AddRouteRequest(
                 "Testowa trasa 3",
                 "Opis trasy",
                 100,
                 123125345,
                 223423423,
-                Arrays.asList(new Point(0, 5), new Point(1,5), new Point(2,5), new Point(3, 5)),
+                Arrays.asList(new Point(0, 5), new Point(1, 5), new Point(2, 5), new Point(3, 5)),
                 Arrays.asList(),
                 Arrays.asList(),
                 folder2.getId()
         );
         Route route3 = addRoute.add(activatedUser, addRouteRequest3);
-
         AddToFavoriteRouteRequest addToFavoriteRouteRequest = new AddToFavoriteRouteRequest(route3.getId());
         addToFavoriteRoutes.add(addToFavoriteRouteRequest, activatedUser);
-
         //when//then
         this.mockMvc
                 .perform(
@@ -118,6 +112,7 @@ public class ListFavoriteRoutesControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.[0].user").isNotEmpty())
                 .andExpect(jsonPath("$.[0].points").isNotEmpty())
                 .andExpect(jsonPath("$.[0].elements").isEmpty())
+                .andDo(document("folder-favoriteroute-find"))
         ;
     }
 }

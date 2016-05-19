@@ -16,6 +16,7 @@ import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class ActivateUserUserControllerTest extends BaseControllerTest {
+public class ActivateUserControllerTest extends BaseControllerTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -38,20 +39,22 @@ public class ActivateUserUserControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void userActivate() throws Exception {
+    public void activate() throws Exception {
+        //given
         RegisterUserRequest registerUserRequest = new RegisterUserRequest();
         registerUserRequest.setUsername("test");
         registerUserRequest.setEmail("test@example.com");
         registerUserRequest.setPassword("password");
         registerUserRequest.setPublic(false);
-        User user = registerUser.createUser(registerUserRequest);
-
+        User user = registerUser.register(registerUserRequest);
+        //when//then
         this.mockMvc
                 .perform(
                         get("/user/activationToken/{activationToken}", user.getActivationToken())
                             .contentType(MediaType.APPLICATION_JSON_UTF8)
                 )
                 .andExpect(status().isOk())
+                .andDo(document("user-activate"))
         ;
     }
 }

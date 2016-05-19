@@ -22,7 +22,7 @@ public class RegisterUser {
     @Autowired
     private PasswordEncryptor passwordEncryptor;
 
-    public User createUser(RegisterUserRequest registerUserRequest) {
+    public User register(RegisterUserRequest registerUserRequest) {
         if (Objects.nonNull(userRepository.findByUsername(registerUserRequest.getUsername()))) {
             throw new UsernameAlreadyUsedException("Username '" + registerUserRequest.getUsername() + "' is already used");
         }

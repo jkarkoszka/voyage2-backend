@@ -1,6 +1,5 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,15 +12,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.route.domain.Route;
+import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
+import pl.edu.pja.gdansk.voyage2.folder.service.AddFolder;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
 import pl.edu.pja.gdansk.voyage2.route.request.AddRouteRequest;
-import pl.edu.pja.gdansk.voyage2.route.request.EditRouteRequest;
-import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
+import pl.edu.pja.gdansk.voyage2.route.request.PhotoElementRequest;
+import pl.edu.pja.gdansk.voyage2.route.request.TextElementRequest;
 
 import java.util.Arrays;
 
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,13 +32,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class EditRouteRouteControllerTest extends BaseControllerTest {
+public class AddRouteControllerTest extends BaseControllerTest {
 
     @Autowired
     private RouteRepository routeRepository;
-
     @Autowired
-    private AddRoute addRoute;
+    private AddFolder addFolder;
 
     @Before
     public void setUp() {
@@ -44,53 +45,42 @@ public class EditRouteRouteControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void routeEdit() throws Exception {
+    public void add() throws Exception {
         //given
-        AddRouteRequest addRouteRequest = new AddRouteRequest(
+        AddFolderRequest addFolderRequest = new AddFolderRequest("test_folder");
+        Folder folder = addFolder.add(addFolderRequest, activatedUser);
+        AddRouteRequest request = new AddRouteRequest(
                 "Testowa trasa",
                 "Opis trasy",
                 100,
                 123125345,
                 223423423,
                 Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
-                Arrays.asList(),
-                Arrays.asList(),
-                null
+                Arrays.asList(new PhotoElementRequest("abc", "opis zdjecia 1", new Point(5, 6)), new PhotoElementRequest("bca", "opis zdjecia 2", new Point(9, 9))),
+                Arrays.asList(new TextElementRequest("poczatek trasy", new Point(1, 0)), new TextElementRequest("koniec trasy", new Point(16, 2))),
+                folder.getId()
         );
-        Route route = addRoute.add(activatedUser, addRouteRequest);
-        EditRouteRequest request = new EditRouteRequest(
-                route.getId(),
-                "Wyedytowana trasa",
-                "Wyedytowany opis trasy",
-                200,
-                123125344,
-                223422423,
-                Arrays.asList(new Point(0, 1), new Point(6,5), new Point(12,56), new Point(2, 25)),
-                Arrays.asList(),
-                Arrays.asList(),
-                null
-        );
-
         //when//then
         this.mockMvc
                 .perform(
-                        put("/route/{id}", route.getId())
+                        post("/routes")
                                 .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(
                                         this.objectMapper.writeValueAsString(request)
                                 )
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("[?($.name == 'Wyedytowana trasa')]").exists())
-                .andExpect(jsonPath("[?($.description == 'Wyedytowany opis trasy')]").exists())
-                .andExpect(jsonPath("[?($.distance == '200')]").exists())
-                .andExpect(jsonPath("[?($.startedAt == '123125344')]").exists())
-                .andExpect(jsonPath("[?($.finishedAt == '223422423')]").exists())
+                .andExpect(jsonPath("[?($.name == 'Testowa trasa')]").exists())
+                .andExpect(jsonPath("[?($.description == 'Opis trasy')]").exists())
+                .andExpect(jsonPath("[?($.distance == '100')]").exists())
+                .andExpect(jsonPath("[?($.startedAt == '123125345')]").exists())
+                .andExpect(jsonPath("[?($.finishedAt == '223423423')]").exists())
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
-                .andExpect(jsonPath("$.elements").isEmpty())
+                .andExpect(jsonPath("$.elements").isNotEmpty())
+                .andDo(document("route-add"))
         ;
     }
 }

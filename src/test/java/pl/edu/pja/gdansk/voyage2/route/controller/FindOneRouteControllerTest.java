@@ -1,6 +1,5 @@
 package pl.edu.pja.gdansk.voyage2.route.controller;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +19,7 @@ import pl.edu.pja.gdansk.voyage2.route.service.AddRoute;
 
 import java.util.Arrays;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
+public class FindOneRouteControllerTest extends BaseControllerTest {
 
     @Autowired
     private RouteRepository routeRepository;
@@ -43,7 +43,7 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void routeGetById() throws Exception {
+    public void findOne() throws Exception {
         //given
         AddRouteRequest addRouteRequest = new AddRouteRequest(
                 "Testowa trasa",
@@ -51,13 +51,12 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
                 100,
                 123125345,
                 223423423,
-                Arrays.asList(new Point(1, 0), new Point(5,6), new Point(9,9), new Point(16, 2)),
+                Arrays.asList(new Point(1, 0), new Point(5, 6), new Point(9, 9), new Point(16, 2)),
                 Arrays.asList(),
                 Arrays.asList(),
                 null
         );
         Route route = addRoute.add(activatedUser, addRouteRequest);
-
         //when//then
         this.mockMvc
                 .perform(
@@ -71,6 +70,7 @@ public class GetRouteByIdRouteControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.user").isNotEmpty())
                 .andExpect(jsonPath("$.points").isNotEmpty())
                 .andExpect(jsonPath("$.elements").isEmpty())
+                .andDo(document("route-find-one"))
         ;
     }
 }

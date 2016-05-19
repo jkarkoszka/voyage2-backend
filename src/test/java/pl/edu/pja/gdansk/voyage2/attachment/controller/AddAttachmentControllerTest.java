@@ -13,13 +13,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.attachment.repository.AttachmentRepository;
-import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
-import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.fileUpload;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,10 +34,9 @@ public class AddAttachmentControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void addAttachment() throws Exception {
+    public void add() throws Exception {
         //given
-        MockMultipartFile fileToUpload = new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-
+        MockMultipartFile fileToUpload = new MockMultipartFile("file", "filename.txt", "text/plain", "some xml" .getBytes());
         //when//then
         this.mockMvc
                 .perform(
@@ -50,6 +46,7 @@ public class AddAttachmentControllerTest extends BaseControllerTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(status().isCreated())
+                .andDo(document("attachment-add"))
         ;
     }
 }
