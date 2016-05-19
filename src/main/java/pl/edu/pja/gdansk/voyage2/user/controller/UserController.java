@@ -6,13 +6,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
+import pl.edu.pja.gdansk.voyage2.user.request.ChangeAvatarRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ChangePasswordRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.ResetPasswordRequest;
-import pl.edu.pja.gdansk.voyage2.user.service.ActivateUser;
-import pl.edu.pja.gdansk.voyage2.user.service.ChangePassword;
-import pl.edu.pja.gdansk.voyage2.user.service.RegisterUser;
-import pl.edu.pja.gdansk.voyage2.user.service.ResetPassword;
+import pl.edu.pja.gdansk.voyage2.user.service.*;
 
 import javax.validation.Valid;
 
@@ -27,6 +25,10 @@ public class UserController {
     private ActivateUser activateUser;
     @Autowired
     private ChangePassword changePassword;
+    @Autowired
+    private ChangeAvatar changeAvatar;
+    @Autowired
+    private DeleteAvatar deleteAvatar;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,13 +44,26 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         resetPassword.reset(resetPasswordRequest);
     }
 
+    @RequestMapping(value = "/user/avatar", method = RequestMethod.PATCH)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeAvatar(@Valid @RequestBody ChangeAvatarRequest changeAvatarRequest,
+                             @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        changeAvatar.change(changeAvatarRequest, principal);
+    }
+
+    @RequestMapping(value = "/user/avatar", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAvatar(@AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        deleteAvatar.delete(principal);
+    }
+
     @RequestMapping(value = "/user/{userId}/password", method = RequestMethod.PATCH)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest,
                                @PathVariable String userId,
                                @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {

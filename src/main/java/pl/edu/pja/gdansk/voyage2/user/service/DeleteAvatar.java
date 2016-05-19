@@ -1,25 +1,26 @@
-package pl.edu.pja.gdansk.voyage2.attachment.service;
+package pl.edu.pja.gdansk.voyage2.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.edu.pja.gdansk.voyage2.attachment.domain.Attachment;
-import pl.edu.pja.gdansk.voyage2.attachment.repository.AttachmentRepository;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
+import pl.edu.pja.gdansk.voyage2.user.exception.UserNotFoundException;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
 
-import java.util.List;
+import java.util.Objects;
 
 @Component
-public class AttachmentFetcher {
+public class DeleteAvatar {
 
-    @Autowired
-    private AttachmentRepository attachmentRepository;
     @Autowired
     private UserRepository userRepository;
 
-    public List<Attachment> findByPrinicpal(SecuredUserDetails principal) {
+    public void delete(SecuredUserDetails principal) {
         User user = userRepository.findByUsername(principal.getUsername());
-        return attachmentRepository.findByUser(user);
+        if (Objects.isNull(user)) {
+            throw new UserNotFoundException("User is not found by username = '" + principal.getUsername() + "'");
+        }
+        user.setAvatar(null);
+        userRepository.save(user);
     }
 }

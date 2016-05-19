@@ -16,5 +16,6 @@ public class RestErrorCode {
     public static final int FOLDER_NAME_IS_ALREADY_USED = 12;
     public static final int ROUTE_IS_NOT_IN_YOUR_FOLDER = 13;
     public static final int FOLDER_NOT_FOUND = 14;
+    public static final int ATTACHMENT_NOT_FOUND = 15;
 
 }
