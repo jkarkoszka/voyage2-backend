@@ -18,5 +18,6 @@ public class RestErrorCode {
     public static final int FOLDER_NOT_FOUND = 14;
     public static final int ATTACHMENT_NOT_FOUND = 15;
     public static final int ROUTE_IS_ALREADY_FAVORITE = 16;
+    public static final int ACCOUNT_IS_NOT_ACTIVE = 17;
 
 }

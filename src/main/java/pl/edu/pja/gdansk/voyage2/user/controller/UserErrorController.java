@@ -66,4 +66,15 @@ public class UserErrorController {
         );
         return restError;
     }
+
+    @ExceptionHandler(AccountIsNotActiveException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public @ResponseBody RestError handleError(AccountIsNotActiveException exception) {
+        RestError restError = new RestError(
+                RestErrorCode.ACCOUNT_IS_NOT_ACTIVE,
+                exception.getMessage(),
+                "Account is not active"
+        );
+        return restError;
+    }
 }

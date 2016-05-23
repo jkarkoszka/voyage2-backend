@@ -1,6 +1,7 @@
 package pl.edu.pja.gdansk.voyage2.user.service;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
@@ -21,6 +22,8 @@ public class RegisterUser {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncryptor passwordEncryptor;
+    @Autowired
+    private TimeService timeService;
 
     public User register(RegisterUserRequest registerUserRequest) {
         if (Objects.nonNull(userRepository.findByUsername(registerUserRequest.getUsername()))) {
@@ -42,6 +45,7 @@ public class RegisterUser {
         user.setRole(UserRole.USER);
         user.setPublic(registerUserRequest.isPublic());
         user.setActive(false);
+        user.setRegisterAt(timeService.getCurrentTimestamp());
         user.setActivationToken(RandomStringUtils.randomAlphabetic(16));
         return user;
     }

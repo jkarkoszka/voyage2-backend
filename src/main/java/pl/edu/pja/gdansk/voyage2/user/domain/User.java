@@ -1,7 +1,6 @@
 package pl.edu.pja.gdansk.voyage2.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -26,6 +25,7 @@ public class User {
     private String email;
     @JsonIgnore
     private String passwordHash;
+    private Long registerAt;
     private UserRole role = UserRole.USER;
     private boolean isPublic;
     private Attachment avatar;
@@ -85,6 +85,14 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
+    public Long getRegisterAt() {
+        return registerAt;
+    }
+
+    public void setRegisterAt(Long registerAt) {
+        this.registerAt = registerAt;
+    }
+
     public UserRole getRole() {
         return role;
     }
@@ -135,30 +143,23 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (isPublic != user.isPublic) return false;
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (passwordHash != null ? !passwordHash.equals(user.passwordHash) : user.passwordHash != null) return false;
-        if (role != user.role) return false;
-        if (avatar != null ? !avatar.equals(user.avatar) : user.avatar != null) return false;
-        return passwordStatus == user.passwordStatus;
-
+        return isPublic == user.isPublic &&
+                isActive == user.isActive &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(passwordHash, user.passwordHash) &&
+                Objects.equals(registerAt, user.registerAt) &&
+                role == user.role &&
+                Objects.equals(avatar, user.avatar) &&
+                passwordStatus == user.passwordStatus &&
+                Objects.equals(activationToken, user.activationToken) &&
+                Objects.equals(favoriteRoutes, user.favoriteRoutes);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (isPublic ? 1 : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (passwordStatus != null ? passwordStatus.hashCode() : 0);
-        return result;
+        return Objects.hash(id, username, email, passwordHash, registerAt, role, isPublic, avatar, passwordStatus, isActive, activationToken, favoriteRoutes);
     }
 }
