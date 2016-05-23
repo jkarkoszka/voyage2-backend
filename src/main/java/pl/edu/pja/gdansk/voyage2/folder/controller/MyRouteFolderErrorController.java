@@ -9,6 +9,7 @@ import pl.edu.pja.gdansk.voyage2.error.domain.RestError;
 import pl.edu.pja.gdansk.voyage2.error.domain.RestErrorCode;
 import pl.edu.pja.gdansk.voyage2.folder.exception.FolderNameAlreadyUsedException;
 import pl.edu.pja.gdansk.voyage2.folder.exception.FolderNotFoundException;
+import pl.edu.pja.gdansk.voyage2.folder.exception.RouteIsAlreadyFavoriteException;
 import pl.edu.pja.gdansk.voyage2.folder.exception.RouteIsNotInYourFolderException;
 
 @ControllerAdvice
@@ -50,6 +51,19 @@ public class MyRouteFolderErrorController {
                 RestErrorCode.FOLDER_NOT_FOUND,
                 exception.getMessage(),
                 "Folder is not found"
+        );
+        return restError;
+    }
+
+    @ExceptionHandler(RouteIsAlreadyFavoriteException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public
+    @ResponseBody
+    RestError handleError(RouteIsAlreadyFavoriteException exception) {
+        RestError restError = new RestError(
+                RestErrorCode.ROUTE_IS_ALREADY_FAVORITE,
+                exception.getMessage(),
+                "Route is already favorite for this user"
         );
         return restError;
     }

@@ -126,6 +126,9 @@ Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów bł�
 | `15`
 | Załącznik nie istnieje
 
+| `16`
+| Trasa jest już jedną z ulubionych tego użytkownika
+
 |===
 
 [[resources]]

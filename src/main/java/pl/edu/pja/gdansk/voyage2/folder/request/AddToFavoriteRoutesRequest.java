@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class AddToFavoriteRouteRequest {
+public class AddToFavoriteRoutesRequest {
 
     @NotNull
     @Size(min = 1)
     private String routeId;
 
     @JsonCreator
-    public AddToFavoriteRouteRequest(@JsonProperty("routeId") String routeId) {
+    public AddToFavoriteRoutesRequest(@JsonProperty("routeId") String routeId) {
         this.routeId = routeId;
     }
 

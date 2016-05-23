@@ -3,7 +3,6 @@ package pl.edu.pja.gdansk.voyage2.folder.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.pja.gdansk.voyage2.folder.exception.RouteIsNotInYourFolderException;
-import pl.edu.pja.gdansk.voyage2.folder.request.AddToFavoriteRouteRequest;
 import pl.edu.pja.gdansk.voyage2.route.domain.Route;
 import pl.edu.pja.gdansk.voyage2.route.exception.RouteNotFoundException;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;

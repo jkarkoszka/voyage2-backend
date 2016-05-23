@@ -15,7 +15,7 @@ import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
 import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
 import pl.edu.pja.gdansk.voyage2.folder.request.AddFolderRequest;
-import pl.edu.pja.gdansk.voyage2.folder.request.AddToFavoriteRouteRequest;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddToFavoriteRoutesRequest;
 import pl.edu.pja.gdansk.voyage2.folder.service.AddFolder;
 import pl.edu.pja.gdansk.voyage2.folder.service.AddToFavoriteRoutes;
 import pl.edu.pja.gdansk.voyage2.route.domain.Route;
@@ -97,8 +97,8 @@ public class FindFavoriteRouteControllerTest extends BaseControllerTest {
                 folder2.getId()
         );
         Route route3 = addRoute.add(activatedUser, addRouteRequest3);
-        AddToFavoriteRouteRequest addToFavoriteRouteRequest = new AddToFavoriteRouteRequest(route3.getId());
-        addToFavoriteRoutes.add(addToFavoriteRouteRequest, activatedUser);
+        AddToFavoriteRoutesRequest addToFavoriteRoutesRequest = new AddToFavoriteRoutesRequest(route3.getId());
+        addToFavoriteRoutes.add(addToFavoriteRoutesRequest, activatedUser);
         //when//then
         this.mockMvc
                 .perform(

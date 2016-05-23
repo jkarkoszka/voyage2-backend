@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
-import pl.edu.pja.gdansk.voyage2.folder.request.AddToFavoriteRouteRequest;
+import pl.edu.pja.gdansk.voyage2.folder.request.AddToFavoriteRoutesRequest;
 import pl.edu.pja.gdansk.voyage2.folder.service.AddToFavoriteRoutes;
 import pl.edu.pja.gdansk.voyage2.route.domain.Route;
 import pl.edu.pja.gdansk.voyage2.route.repository.RouteRepository;
@@ -59,8 +59,8 @@ public class RemoveFavoriteRouteControllerTest extends BaseControllerTest {
                 null
         );
         Route route = addRoute.add(activatedUser, addRouteRequest);
-        AddToFavoriteRouteRequest addToFavoriteRouteRequest = new AddToFavoriteRouteRequest(route.getId());
-        addToFavoriteRoutes.add(addToFavoriteRouteRequest, activatedUser);
+        AddToFavoriteRoutesRequest addToFavoriteRoutesRequest = new AddToFavoriteRoutesRequest(route.getId());
+        addToFavoriteRoutes.add(addToFavoriteRoutesRequest, activatedUser);
         //when//then
         this.mockMvc
                 .perform(
