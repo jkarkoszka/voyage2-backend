@@ -101,6 +101,7 @@ public class User {
         this.role = role;
     }
 
+    @JsonIgnore
     public Collection<SimpleGrantedAuthority> getAuthorities() {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority(getRole().name()));

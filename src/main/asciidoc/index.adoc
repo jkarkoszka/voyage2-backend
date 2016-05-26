@@ -143,6 +143,14 @@ Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów bł�
 [[resources-user-register]]
 ==== Rejestracja użytkownika
 
+===== Opis JSON'a w żądaniu
+
+include::{snippets}/user-register/request-fields.adoc[]
+
+===== Opis JSON'a w odpowiedzi
+
+include::{snippets}/user-register/response-fields.adoc[]
+
 ===== Przykładowe zapytanie
 
 include::{snippets}/user-register/http-request.adoc[]
