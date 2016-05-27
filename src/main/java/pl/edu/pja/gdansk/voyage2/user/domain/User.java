@@ -31,6 +31,7 @@ public class User {
     private Attachment avatar;
     private PasswordStatus passwordStatus = PasswordStatus.NORMAL;
     private boolean isActive = false;
+    private String sosEmail;
     @JsonIgnore
     private String activationToken;
     @JsonIgnore
@@ -75,6 +76,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSosEmail() {
+        return sosEmail;
+    }
+
+    public void setSosEmail(String sosEmail) {
+        this.sosEmail = sosEmail;
     }
 
     public String getPasswordHash() {
@@ -155,12 +164,13 @@ public class User {
                 role == user.role &&
                 Objects.equals(avatar, user.avatar) &&
                 passwordStatus == user.passwordStatus &&
+                Objects.equals(sosEmail, user.sosEmail) &&
                 Objects.equals(activationToken, user.activationToken) &&
                 Objects.equals(favoriteRoutes, user.favoriteRoutes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, passwordHash, registerAt, role, isPublic, avatar, passwordStatus, isActive, activationToken, favoriteRoutes);
+        return Objects.hash(id, username, email, passwordHash, registerAt, role, isPublic, avatar, passwordStatus, isActive, sosEmail, activationToken, favoriteRoutes);
     }
 }

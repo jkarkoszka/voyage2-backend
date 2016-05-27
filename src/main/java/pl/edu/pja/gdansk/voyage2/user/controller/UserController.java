@@ -6,10 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeAvatarRequest;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangePasswordRequest;
-import pl.edu.pja.gdansk.voyage2.user.request.RegisterUserRequest;
-import pl.edu.pja.gdansk.voyage2.user.request.ResetPasswordRequest;
+import pl.edu.pja.gdansk.voyage2.user.request.*;
 import pl.edu.pja.gdansk.voyage2.user.service.*;
 
 import javax.validation.Valid;
@@ -26,9 +23,15 @@ public class UserController {
     @Autowired
     private ChangePassword changePassword;
     @Autowired
+    private ChangeIsActive changeIsActive;
+    @Autowired
+    private ChangeSosEmail changeSosEmail;
+    @Autowired
     private ChangeAvatar changeAvatar;
     @Autowired
     private DeleteAvatar deleteAvatar;
+    @Autowired
+    private SosSender sosSender;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,7 +41,9 @@ public class UserController {
 
     @RequestMapping(value = "/user/activationToken/{activationToken}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody String activate(@PathVariable String activationToken) {
+    public
+    @ResponseBody
+    String activate(@PathVariable String activationToken) {
         activateUser.activate(activationToken);
         return "Konto zostało aktywowane.";
     }
@@ -68,5 +73,28 @@ public class UserController {
                                @PathVariable String userId,
                                @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         changePassword.change(changePasswordRequest, principal, userId);
+    }
+
+    @RequestMapping(value = "/user/{userId}/isActive", method = RequestMethod.PATCH)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeIsActive(@Valid @RequestBody ChangeIsActiveRequest changeIsActiveRequest,
+                               @PathVariable String userId,
+                               @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        changeIsActive.change(changeIsActiveRequest, principal, userId);
+    }
+
+    @RequestMapping(value = "/user/{userId}/sosEmail", method = RequestMethod.PATCH)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeSosEmail(@Valid @RequestBody ChangeSosEmailRequest changeSosEmailRequest,
+                                   @PathVariable String userId,
+                                   @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        changeSosEmail.change(changeSosEmailRequest, principal, userId);
+    }
+
+    @RequestMapping(value = "/sos", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void sos(@Valid @RequestBody SosRequest sosRequest,
+                    @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+        sosSender.send(principal, sosRequest);
     }
 }

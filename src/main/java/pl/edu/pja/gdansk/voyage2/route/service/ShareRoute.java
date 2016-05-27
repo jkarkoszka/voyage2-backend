@@ -33,7 +33,7 @@ public class ShareRoute {
         if (Objects.isNull(user)) {
             throw new UserNotFoundException("User is not found by username = '" + principal.getUsername() + "'");
         }
-        if (!route.getUser().equals(user) || !user.getFavoriteRoutes().contains(route)) {
+        if (!route.getUser().equals(user) && !user.getFavoriteRoutes().contains(route)) {
             throw new RouteAccessDeniedException();
         }
         shareRouteLinkSender.send(shareRouteRequest.getEmail(), route);

@@ -60,6 +60,7 @@ public class RegisterUserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("[?($.public == true)]").exists())
                 .andExpect(jsonPath("[?($.passwordStatus == 'NORMAL')]").exists())
                 .andExpect(jsonPath("[?($.avatar == null)]").exists())
+                .andExpect(jsonPath("[?($.sosEmail == null)]").exists())
                 .andExpect(jsonPath("$.password").doesNotExist())
                 .andDo(
                         document("user-register",
@@ -77,6 +78,7 @@ public class RegisterUserControllerTest extends BaseControllerTest {
                                         fieldWithPath("public").type(JsonFieldType.BOOLEAN).description("Czy konto jest publiczne?"),
                                         fieldWithPath("passwordStatus").type(JsonFieldType.STRING).description("Status hasła użytkownika (NORMAL,ONETIME,EXPIRED)"),
                                         fieldWithPath("avatar").type(JsonFieldType.NULL).description("Avatar użytkownika (przy rejestracji, zawsze null)"),
+                                        fieldWithPath("sosEmail").type(JsonFieldType.NULL).description("Avatar użytkownika (przy rejestracji, zawsze null)"),
                                         fieldWithPath("registerAt").type(JsonFieldType.NUMBER).description("Timestamp rejstracji"),
                                         fieldWithPath("active").type(JsonFieldType.BOOLEAN).description("Czy konto jest aktywne?")
                                         )

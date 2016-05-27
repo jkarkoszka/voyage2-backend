@@ -3,7 +3,6 @@ package pl.edu.pja.gdansk.voyage2.folder.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.pja.gdansk.voyage2.folder.domain.Folder;
-import pl.edu.pja.gdansk.voyage2.folder.domain.FolderType;
 import pl.edu.pja.gdansk.voyage2.folder.exception.FolderNotFoundException;
 import pl.edu.pja.gdansk.voyage2.folder.repository.FolderRepository;
 import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;

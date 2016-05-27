@@ -77,4 +77,26 @@ public class UserErrorController {
         );
         return restError;
     }
+
+    @ExceptionHandler(SosSenderException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public @ResponseBody RestError handleError(SosSenderException exception) {
+        RestError restError = new RestError(
+                RestErrorCode.SENDING_SOS_FAILED,
+                exception.getMessage(),
+                "Sending an email with SOS failed."
+        );
+        return restError;
+    }
+
+    @ExceptionHandler(UserHasNotSetSosEmailException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public @ResponseBody RestError handleError(UserHasNotSetSosEmailException exception) {
+        RestError restError = new RestError(
+                RestErrorCode.USER_HAS_NOT_SET_SOS_EMAIL,
+                exception.getMessage(),
+                "User has not set SOS email."
+        );
+        return restError;
+    }
 }

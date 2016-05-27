@@ -132,6 +132,12 @@ Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów bł�
 | `17`
 | Konto jest nieaktywne
 
+| `18`
+| Nie powiodło się wysłanie SOS
+
+| `19`
+| Użytkownik nie ma ustawionego maila kontaktowego (SOS)
+
 |===
 
 [[resources]]
@@ -234,6 +240,30 @@ include::{snippets}/user-reset-password/http-request.adoc[]
 
 include::{snippets}/user-reset-password/http-response.adoc[]
 
+[[resources-user-change-sos-email]]
+
+==== Zmiana maila kontaktowego SOS
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-sos-email/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-sos-email/http-response.adoc[]
+
+[[resources-user-change-is-active]]
+
+==== Zmiana status konta
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-is-active/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-is-active/http-response.adoc[]
+
 [[resources-user-change-password]]
 
 ==== Zmiana hasła użytkownika
@@ -303,6 +333,17 @@ include::{snippets}/route-find-by-area/http-request.adoc[]
 ===== Przykładowa odpowiedź
 
 include::{snippets}/route-find-by-area/http-response.adoc[]
+
+[[resources-route-share]]
+==== Udostępnienie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-share/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-share/http-response.adoc[]
 
 [[resources-folder-favoriteroute]]
 === Foldery - ulubione
