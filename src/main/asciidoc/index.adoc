@@ -276,6 +276,18 @@ include::{snippets}/user-change-password/http-request.adoc[]
 
 include::{snippets}/user-change-password/http-response.adoc[]
 
+[[resources-user-sos]]
+
+==== Wysłanie sygnału SOS
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-sos/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-sos/http-response.adoc[]
+
 [[resources-route]]
 === Trasy
 
