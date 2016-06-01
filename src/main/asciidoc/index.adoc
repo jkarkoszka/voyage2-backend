@@ -302,6 +302,17 @@ include::{snippets}/route-add/http-request.adoc[]
 
 include::{snippets}/route-add/http-response.adoc[]
 
+[[resources-route-add-without-folder]]
+==== Tworzenie trasy bez folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-add-without-folder/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-add-without-folder/http-response.adoc[]
+
 [[resources-route-edit]]
 ==== Edycja trasy
 
