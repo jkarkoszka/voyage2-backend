@@ -24,6 +24,7 @@ public class Route {
     private GeoJsonLineString points;
     @DBRef
     private User user;
+    @DBRef
     private Folder folder;
     private List<Element> elements;
 

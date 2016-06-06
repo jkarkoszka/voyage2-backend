@@ -254,15 +254,15 @@ include::{snippets}/user-change-sos-email/http-response.adoc[]
 
 [[resources-user-change-is-active]]
 
-==== Zmiana status konta
+==== Zmiana statusu konta
 
 ===== Przykładowe zapytanie
 
-include::{snippets}/user-change-is-active/http-request.adoc[]
+include::{snippets}/user-change-is-public/http-request.adoc[]
 
 ===== Przykładowa odpowiedź
 
-include::{snippets}/user-change-is-active/http-response.adoc[]
+include::{snippets}/user-change-is-public/http-response.adoc[]
 
 [[resources-user-change-password]]
 

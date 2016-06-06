@@ -12,13 +12,15 @@ public class UserTokenResponse {
     private String id;
     private String token;
     private String username;
+    private boolean isPublic;
     private PasswordStatus passwordStatus;
     private Collection<String> authorities = new ArrayList<String>();
 
-    public UserTokenResponse(String id, String token, String username, PasswordStatus passwordStatus, Collection<SimpleGrantedAuthority> authorities) {
+    public UserTokenResponse(String id, String token, String username, boolean isPublic, PasswordStatus passwordStatus, Collection<SimpleGrantedAuthority> authorities) {
         this.id = id;
         this.token = token;
         this.username = username;
+        this.isPublic = isPublic;
         this.passwordStatus = passwordStatus;
         for (GrantedAuthority authority: authorities) {
             this.authorities.add(authority.getAuthority().toString());
@@ -35,6 +37,10 @@ public class UserTokenResponse {
 
     public String getUsername() {
         return username;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
     }
 
     public Collection<String> getAuthorities() {

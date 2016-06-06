@@ -12,7 +12,6 @@ import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeIsActiveRequest;
 import pl.edu.pja.gdansk.voyage2.user.request.SosRequest;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private ChangePassword changePassword;
     @Autowired
-    private ChangeIsActive changeIsActive;
+    private ChangeIsPublic changeIsPublic;
     @Autowired
     private ChangeSosEmail changeSosEmail;
     @Autowired
@@ -75,12 +75,12 @@ public class UserController {
         changePassword.change(changePasswordRequest, principal, userId);
     }
 
-    @RequestMapping(value = "/user/{userId}/isActive", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/user/{userId}/isPublic", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changeIsActive(@Valid @RequestBody ChangeIsActiveRequest changeIsActiveRequest,
+    public void changeIsActive(@Valid @RequestBody ChangeIsPublicRequest changeIsPublicRequest,
                                @PathVariable String userId,
                                @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
-        changeIsActive.change(changeIsActiveRequest, principal, userId);
+        changeIsPublic.change(changeIsPublicRequest, principal, userId);
     }
 
     @RequestMapping(value = "/user/{userId}/sosEmail", method = RequestMethod.PATCH)

@@ -12,8 +12,7 @@ import pl.edu.pja.gdansk.voyage2.Application;
 import pl.edu.pja.gdansk.voyage2.BaseControllerTest;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeIsActiveRequest;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeSosEmailRequest;
+import pl.edu.pja.gdansk.voyage2.user.request.ChangeIsPublicRequest;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
@@ -24,21 +23,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class ChangeIsActiveUserControllerTest extends BaseControllerTest {
+public class ChangeIsPublicUserControllerTest extends BaseControllerTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
-    public void changeIsActive() throws Exception {
+    public void changeIsPublic() throws Exception {
         //given
-        ChangeIsActiveRequest request = new ChangeIsActiveRequest();
-        request.setActive(false);
+        ChangeIsPublicRequest request = new ChangeIsPublicRequest();
+        request.setPublic(false);
         User user = userRepository.findByUsername(activatedUser.getUsername());
         //when//then
         this.mockMvc
                 .perform(
-                        patch("/user/{userId}/isActive", user.getId())
+                        patch("/user/{userId}/isPublic", user.getId())
                                 .with(httpBasic("test", "aaa"))
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content(
@@ -46,7 +45,7 @@ public class ChangeIsActiveUserControllerTest extends BaseControllerTest {
                                 )
                 )
                 .andExpect(status().isNoContent())
-                .andDo(document("user-change-is-active"))
+                .andDo(document("user-change-is-public"))
         ;
     }
 }

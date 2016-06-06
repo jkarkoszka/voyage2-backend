@@ -6,20 +6,20 @@ import pl.edu.pja.gdansk.voyage2.security.domain.SecuredUserDetails;
 import pl.edu.pja.gdansk.voyage2.user.domain.User;
 import pl.edu.pja.gdansk.voyage2.user.exception.UserNotFoundException;
 import pl.edu.pja.gdansk.voyage2.user.repository.UserRepository;
-import pl.edu.pja.gdansk.voyage2.user.request.ChangeIsActiveRequest;
+import pl.edu.pja.gdansk.voyage2.user.request.ChangeIsPublicRequest;
 
 @Component
-public class ChangeIsActive {
+public class ChangeIsPublic {
 
     @Autowired
     private UserRepository userRepository;
 
-    public void change(ChangeIsActiveRequest changeIsActiveRequest, SecuredUserDetails principal, String userId) {
+    public void change(ChangeIsPublicRequest changeIsPublicRequest, SecuredUserDetails principal, String userId) {
         User user = userRepository.findByUsername(principal.getUsername());
         if (!userId.equals(user.getId())) {
             throw new UserNotFoundException("User is not found by id = '" + userId + "'");
         }
-        user.setActive(changeIsActiveRequest.isActive());
+        user.setPublic(changeIsPublicRequest.isPublic());
         userRepository.save(user);
     }
 }

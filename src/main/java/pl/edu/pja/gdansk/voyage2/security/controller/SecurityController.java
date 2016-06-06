@@ -23,7 +23,14 @@ public class SecurityController {
     public @ResponseBody
     UserTokenResponse login(HttpSession session, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
         User user = userRepository.findByUsername(principal.getUsername());
-        UserTokenResponse userTokenResponse = new UserTokenResponse(user.getId(), session.getId(), user.getUsername(), user.getPasswordStatus(), user.getAuthorities());
+        UserTokenResponse userTokenResponse = new UserTokenResponse(
+                user.getId(),
+                session.getId(),
+                user.getUsername(),
+                user.isPublic(),
+                user.getPasswordStatus(),
+                user.getAuthorities()
+        );
         if (user.getPasswordStatus().equals(PasswordStatus.ONETIME)) {
             user.setPasswordStatus(PasswordStatus.EXPIRED);
         }

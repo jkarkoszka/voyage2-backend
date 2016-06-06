@@ -34,7 +34,10 @@ public class RouteController {
 
     @RequestMapping(value = "/routes", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Route add(@Valid @RequestBody AddRouteRequest addRouteRequest, @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal) {
+    public Route add(
+            @Valid @RequestBody AddRouteRequest addRouteRequest,
+            @AuthenticationPrincipal(errorOnInvalidType = true) SecuredUserDetails principal
+    ) {
         return addRoute.add(principal, addRouteRequest);
     }
 
