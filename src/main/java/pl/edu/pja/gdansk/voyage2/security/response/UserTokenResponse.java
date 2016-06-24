@@ -14,9 +14,10 @@ public class UserTokenResponse {
     private String username;
     private boolean isPublic;
     private PasswordStatus passwordStatus;
+    private String sosEmail;
     private Collection<String> authorities = new ArrayList<String>();
 
-    public UserTokenResponse(String id, String token, String username, boolean isPublic, PasswordStatus passwordStatus, Collection<SimpleGrantedAuthority> authorities) {
+    public UserTokenResponse(String id, String token, String username, boolean isPublic, PasswordStatus passwordStatus, Collection<SimpleGrantedAuthority> authorities, String sosEmail) {
         this.id = id;
         this.token = token;
         this.username = username;
@@ -25,6 +26,7 @@ public class UserTokenResponse {
         for (GrantedAuthority authority: authorities) {
             this.authorities.add(authority.getAuthority().toString());
         }
+        this.sosEmail = sosEmail;
     }
 
     public String getId() {
@@ -49,5 +51,9 @@ public class UserTokenResponse {
 
     public PasswordStatus getPasswordStatus() {
         return passwordStatus;
+    }
+
+    public String getSosEmail() {
+        return sosEmail;
     }
 }

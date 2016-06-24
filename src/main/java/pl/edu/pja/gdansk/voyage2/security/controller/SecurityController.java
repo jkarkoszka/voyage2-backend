@@ -29,7 +29,8 @@ public class SecurityController {
                 user.getUsername(),
                 user.isPublic(),
                 user.getPasswordStatus(),
-                user.getAuthorities()
+                user.getAuthorities(),
+                user.getSosEmail()
         );
         if (user.getPasswordStatus().equals(PasswordStatus.ONETIME)) {
             user.setPasswordStatus(PasswordStatus.EXPIRED);
