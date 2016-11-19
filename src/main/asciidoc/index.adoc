@@ -1,0 +1,469 @@
+= Voyage2 Backend
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+[[overview-http-verbs]]
+== Opis używanych metod HTTP
+Voyage2 Backend używa standardy protokołu HTTP i stara się być jak najbliżej konwencji REST.
+
+|===
+| Metoda HTTP | Opis użycia
+
+| `GET`
+| Używana do pobierania elementów np. listy tras, pojedynczych tras itp.
+
+| `POST`
+| Używana do tworzenia nowych elementów np. dodawania tras, dodawanie elementów tras itp.
+
+| `PATCH`
+| Używana do edycja istniejących elementów, włączając w to również częściową edycję, np. zmiana nazwy trasy
+
+| `PUT`
+| Używana do edycji istniejących elementów - tylko całkowita podmiana istniejącego elementu np. trasa wraz ze wszystkimi elementami
+
+| `DELETE`
+| Używana do usuwania istniejących elementów
+|===
+
+[[overview-http-status-codes]]
+== Opis używanych statusów HTTP
+Voyage2 Backend używa standardy protokołu HTTP i stara się być jak najbliżej konwencji REST.
+
+|===
+| Status HTTP | Opis użycia
+
+| `200 OK`
+| Standardowa odpowiedź dla poprawnie zakończonych zapytań HTTP. Dla zapytań metodą GET odpowiedź ta oznacza, że zwrócona odpowiedź zawiera żądany element, badź listę elementów. Dla zapytań metodą POST odpowiedź ta oznacza, że zwrócona odpowiedź zawiera informację o poprawnym przetworzeniu wysłanego elementu
+
+| `201 Created`
+| Odpowiedż oznacza, że wysłany przez zapytanie HTTP element (metodą POST) został poprawnie utworzony
+
+| `204 No Content`
+| Odpowiedź oznacza, że zapytanie HTTP zostało poprawnie przetworzone
+
+| `400 Bad Request`
+| Odpowiedź oznacza że zapytanie HTTP nie zostało poprawnie przetworzone z powodu błędnej struktury np. niepoprawny format zapytania
+
+| `401 Unauthorized`
+| Odpowiedź oznacza że zapytanie HTTP nie zostało poprawnie przetworzone z powodu braku autoryzacji użytkownika. Taki kod błędu będzie również zwrócony na próbę zalogowania błędnymi danymi użytkownika.
+
+| `404 Not Found`
+| Odpowiedź oznacza że element, o który został wskazany w zapytaniu HTTP nie istnieje
+
+| `500 Internal Server Error`
+| Odpowiedź ozacza że wystąpił błąd w czasie przetwarzania serwera. Szczegółowa informację o błędzie można uzyskać z kodu błędu, który został zwrócony. Opis kodów błędów znajduje się poniżej.
+
+|===
+
+[[overview-error-codes]]
+== Opis kodów błędów
+Gdy występuje wyjątek Voyage Backend zwraca odpowiedź w następującej formie:
+
+[source,http]
+----
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+Content-Length: 580
+
+{
+"code" : 1,
+"message" : "Item already exist in the database",
+"developerMessage" : "{ \"serverUsed\" : \"192.168.99.100:32769\" , \"ok\" : 1 , \"n\" : 0 , \"err\" : \"E11000 duplicate key error collection: voyage2.user index: email dup key: { : \\\"test@example.com\\\" }\" , \"code\" : 11000}; nested exception is com.mongodb.MongoException$DuplicateKey: { \"serverUsed\" : \"192.168.99.100:32769\" , \"ok\" : 1 , \"n\" : 0 , \"err\" : \"E11000 duplicate key error collection: voyage2.user index: email dup key: { : \\\"test@example.com\\\" }\" , \"code\" : 11000}"
+}
+----
+
+Kod błędu zwracany jest w weźle 'code'. Poniżej opis dostępnych kodów błędów wraz z opisem co oznaczają.
+
+|===
+| Kod błedu | Opis
+
+| `1`
+| Element już istnieje w bazie danych
+
+| `2`
+| Trasa nie znaleziona w bazie danych
+
+| `3`
+| Parametr routeId z URL Path nie pasuje do routeId z request body
+
+| `4`
+| Brak dostępu do trasy
+
+| `5`
+| Użytkownik nie znaleziony
+
+| `6`
+| Nie powiodło się wysłanie linku aktywacyjnego
+
+| `7`
+| Nie powiodło się wysłanie nowego hasła
+
+| `8`
+| Nie powiódł się upload pliku na serwer
+
+| `9`
+| Nie powiodło się wysłanie e-maila
+
+| `10`
+| E-mail już jest używany
+
+| `11`
+| Nazwa użytkownika jest już zajęta
+
+| `12`
+| Nazwa folderu jest już zajęta
+
+| `13`
+| Trasa nie jest w twoim folderze
+
+| `14`
+| Folder nie istnieje
+
+| `15`
+| Załącznik nie istnieje
+
+| `16`
+| Trasa jest już jedną z ulubionych tego użytkownika
+
+| `17`
+| Konto jest nieaktywne
+
+| `18`
+| Nie powiodło się wysłanie SOS
+
+| `19`
+| Użytkownik nie ma ustawionego maila kontaktowego (SOS)
+
+|===
+
+[[resources]]
+== Opis metod API
+
+[[resources-user]]
+=== Użytkownicy
+
+[[resources-user-register]]
+==== Rejestracja użytkownika
+
+===== Opis JSON'a w żądaniu
+
+include::{snippets}/user-register/request-fields.adoc[]
+
+===== Opis JSON'a w odpowiedzi
+
+include::{snippets}/user-register/response-fields.adoc[]
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-register/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-register/http-response.adoc[]
+
+[[resources-security-login]]
+
+==== Autoryzacja użytkownika
+
+Autoryzacja odbywa się za pomocą metody HTTP Basic. Nazwa użytkownika i hasło jest przekazywana w nagłówku 'Authorization', a jego wartość jest zapisana w kodowaniu Base64.
+W odpowiedzi dostajemy token, który jest później wykorzystywany do wykonywania zapytań do API w kontekście zalogowanego użytkownika. Token przekazujemy w nagłówku o nazwie: "x-auth-token".
+
+===== Przykładowe zapytanie
+
+include::{snippets}/security-login/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/security-login/http-response.adoc[]
+
+[[resources-security-logout]]
+
+==== Wylogowanie użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/security-logout/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/security-logout/http-response.adoc[]
+
+[[resources-user-activate]]
+
+==== Aktywacja użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-activate/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-activate/http-response.adoc[]
+
+[[resources-user-change-avatar]]
+
+==== Zmiana avatara użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-avatar/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-avatar/http-response.adoc[]
+
+[[resources-user-delete-avatar]]
+
+==== Usunięcie avatara użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-delete-avatar/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-delete-avatar/http-response.adoc[]
+
+[[resources-user-reset-password]]
+
+==== Reset hasła użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-reset-password/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-reset-password/http-response.adoc[]
+
+[[resources-user-change-sos-email]]
+
+==== Zmiana maila kontaktowego SOS
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-sos-email/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-sos-email/http-response.adoc[]
+
+[[resources-user-change-is-active]]
+
+==== Zmiana statusu konta
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-is-public/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-is-public/http-response.adoc[]
+
+[[resources-user-change-password]]
+
+==== Zmiana hasła użytkownika
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-change-password/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-change-password/http-response.adoc[]
+
+[[resources-user-sos]]
+
+==== Wysłanie sygnału SOS
+
+===== Przykładowe zapytanie
+
+include::{snippets}/user-sos/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/user-sos/http-response.adoc[]
+
+[[resources-route]]
+=== Trasy
+
+[[resources-route-add]]
+==== Tworzenie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-add/http-response.adoc[]
+
+[[resources-route-add-without-folder]]
+==== Tworzenie trasy bez folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-add-without-folder/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-add-without-folder/http-response.adoc[]
+
+[[resources-route-edit]]
+==== Edycja trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-edit/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-edit/http-response.adoc[]
+
+[[resources-route-delete]]
+==== Usuwanie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-delete/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-delete/http-response.adoc[]
+
+[[resources-route-fine-one]]
+==== Pobieranie wybranej trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-find-one/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-find-one/http-response.adoc[]
+
+[[resources-route-find-by-area]]
+==== Pobieranie listy tras z obszaru
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-find-by-area/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-find-by-area/http-response.adoc[]
+
+[[resources-route-share]]
+==== Udostępnienie trasy
+
+===== Przykładowe zapytanie
+
+include::{snippets}/route-share/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/route-share/http-response.adoc[]
+
+[[resources-folder-favoriteroute]]
+=== Foldery - ulubione
+
+[[resources-folder-favoriteroute-add]]
+==== Dodawanie trasy do ulubionych
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-favoriteroute-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-favoriteroute-add/http-response.adoc[]
+
+[[resources-folder-favoriteroute-delete]]
+==== Usuwanie trasy z ulubionych
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-favoriteroute-remove/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-favoriteroute-remove/http-response.adoc[]
+
+[[resources-folder-favoriteroute-find]]
+==== Pobieranie listy ulubionych tras
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-favoriteroute-find/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-favoriteroute-find/http-response.adoc[]
+
+[[resources-folder-myroute]]
+=== Foldery - moje trasy
+
+[[resources-folder-myroute-find]]
+==== Pobieranie listy moich tras
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-myroute-find/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-myroute-find/http-response.adoc[]
+
+[[resources-folder-myroutefolder-add]]
+==== Dodawanie folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-myroutefolder-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-myroutefolder-add/http-response.adoc[]
+
+[[resources-folder-myroutefolder-delete]]
+==== Usuwanie folderu
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-myroutefolder-delete/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-myroutefolder-delete/http-response.adoc[]
+
+[[resources-folder-myroutefolder-find]]
+==== Pobieranie listy folderów
+
+===== Przykładowe zapytanie
+
+include::{snippets}/folder-myroutefolder-find/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/folder-myroutefolder-find/http-response.adoc[]
+
+[[resources-attachment]]
+=== Załączniki
+
+[[resources-attachment-add]]
+
+==== Tworzenie załącznika
+
+Załączniki to po prostu pliki wgrane na serwer przez użytkownika. Każdy z wgranych plików otrzymuje identyfikator - id / attachmentId. Ta wartość może być użyta w requeście tworzącym trasę (do dołączania zdjęć) lub w requeście zmieniających avatara użytkownika.
+
+===== Przykładowe zapytanie
+
+include::{snippets}/attachment-add/http-request.adoc[]
+
+===== Przykładowa odpowiedź
+
+include::{snippets}/attachment-add/http-response.adoc[]
